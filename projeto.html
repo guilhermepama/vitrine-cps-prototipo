@@ -71,6 +71,14 @@ a { color: inherit; }
 .faixa-w { border-bottom: 1px solid var(--linha); }
 .container { max-width: 1280px; margin: 0 auto; padding-inline: var(--gutter); }
 
+
+/* grades de uma coluna no celular: minmax(0,1fr) para o conteúdo (títulos largos) nunca alargar a coluna além da tela */
+.hero__grade, .proj__grade, .sobre-proj, .sobre__cabeca, .secao__cabeca, .voto__cabeca, .grupo__grade, .convite__grade,
+.ficha, .ficha-tec, .galeria, .equipe, .impacto, .tecnica, .passos, .rodape__grade, .cartoes { grid-template-columns: minmax(0, 1fr); }
+.hero__grade > *, .proj__grade > *, .sobre-proj > *, .secao__cabeca > *, .voto__cabeca > *, .grupo__grade > *, .convite__grade > * { min-width: 0; }
+.hero h1, .proj h1, .display { overflow-wrap: anywhere; }
+.hero h1, .proj h1 { overflow-wrap: normal; max-width: 100%; }
+
 /* ---------- TOPO ---------- */
 .topo { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 4; background: var(--papel); border-bottom: 1px solid var(--linha); }
 .topo__linha { display: flex; align-items: stretch; justify-content: space-between; min-height: 56px; }

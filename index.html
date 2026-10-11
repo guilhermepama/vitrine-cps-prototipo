@@ -71,6 +71,14 @@ a { color: inherit; }
 .faixa-w { border-bottom: 1px solid var(--linha); }
 .container { max-width: 1280px; margin: 0 auto; padding-inline: var(--gutter); }
 
+
+/* grades de uma coluna no celular: minmax(0,1fr) para o conteúdo (títulos largos) nunca alargar a coluna além da tela */
+.hero__grade, .proj__grade, .sobre-proj, .sobre__cabeca, .secao__cabeca, .voto__cabeca, .grupo__grade, .convite__grade,
+.ficha, .ficha-tec, .galeria, .equipe, .impacto, .tecnica, .passos, .rodape__grade, .cartoes { grid-template-columns: minmax(0, 1fr); }
+.hero__grade > *, .proj__grade > *, .sobre-proj > *, .secao__cabeca > *, .voto__cabeca > *, .grupo__grade > *, .convite__grade > * { min-width: 0; }
+.hero h1, .proj h1, .display { overflow-wrap: anywhere; }
+.hero h1, .proj h1 { overflow-wrap: normal; max-width: 100%; }
+
 /* ---------- TOPO ---------- */
 .topo { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 4; background: var(--papel); border-bottom: 1px solid var(--linha); }
 .topo__linha { display: flex; align-items: stretch; justify-content: space-between; min-height: 56px; }
@@ -123,7 +131,7 @@ a { color: inherit; }
 /* a foto ocupa a célula inteira e sangra até a borda direita da tela */
 .hero__foto { display: flex; flex-direction: column; min-height: 240px; background: var(--papel); margin: 0; }
 .hero__foto .quadro { position: relative; flex: 1; overflow: hidden; }
-@media (max-width: 899px) { .hero__foto { order: -1; margin-inline: calc(-1 * var(--gutter)); aspect-ratio: 16 / 10; border-bottom: 1px solid var(--linha); } .hero__foto .carimbo { width: 100%; } }
+@media (max-width: 899px) { .hero__foto { order: -1; margin-inline: calc(-1 * var(--gutter)); min-height: 0; width: auto; justify-self: stretch; aspect-ratio: 16 / 10; border-bottom: 1px solid var(--linha); } .hero__foto .carimbo { width: 100%; } }
 @media (min-width: 900px) { .hero__foto { margin-right: calc(-1 * max(var(--gutter), (100vw - 1280px) / 2 + var(--gutter))); } }
 .hero__foto .carimbo { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 135%; max-height: 100%; aspect-ratio: 1774 / 887; }
 .hero__foto img { display: block; width: 100%; height: 100%; object-fit: contain; object-position: 50% 100%; }
@@ -285,6 +293,7 @@ a { color: inherit; }
 .proto { position: sticky; bottom: 0; z-index: 5; display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding: 8px var(--gutter); padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px)); background: var(--papel-2); border-top: 1px dashed var(--linha); font-family: var(--mono); font-size: var(--t-12); color: var(--tinta-2); }
 .proto label { display: inline-flex; align-items: center; gap: 6px; color: var(--tinta); }
 .proto__tag { color: var(--vermelho); }
+@media (max-width: 899px) { .hero__foto .carimbo { width: 100%; } }
 @media (max-width: 719px) { .proto { display: none; } }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
