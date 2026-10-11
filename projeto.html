@@ -284,6 +284,7 @@ a { color: inherit; }
 .proto { position: sticky; bottom: 0; z-index: 5; display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding: 8px var(--gutter); padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px)); background: var(--papel-2); border-top: 1px dashed var(--linha); font-family: var(--mono); font-size: var(--t-12); color: var(--tinta-2); }
 .proto label { display: inline-flex; align-items: center; gap: 6px; color: var(--tinta); }
 .proto__tag { color: var(--vermelho); }
+@media (max-width: 719px) { .proto { display: none; } }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
 <style>
