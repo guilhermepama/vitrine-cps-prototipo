@@ -131,7 +131,13 @@ a { color: inherit; }
 /* a foto ocupa a célula inteira e sangra até a borda direita da tela */
 .hero__foto { display: flex; flex-direction: column; min-height: 240px; background: var(--papel); margin: 0; }
 .hero__foto .quadro { position: relative; flex: 1; overflow: hidden; }
-@media (max-width: 899px) { .hero__foto { order: 1; margin-top: calc(var(--u) * 2); margin-inline: calc(-1 * var(--gutter)); min-height: 0; width: auto; justify-self: stretch; aspect-ratio: 16 / 10; border-bottom: 1px solid var(--linha); } .hero__foto .carimbo { width: 100%; } }
+@media (max-width: 899px) {
+  /* no celular a figura se desmonta: a foto vai para o topo, a faixa preta fica depois dos botões */
+  .hero__foto { display: contents; }
+  .hero__foto .quadro { order: -1; margin-inline: calc(-1 * var(--gutter)); aspect-ratio: 16 / 10; min-height: 0; border-bottom: 1px solid var(--linha); }
+  .hero__foto figcaption { order: 1; margin-inline: calc(-1 * var(--gutter)); margin-top: calc(var(--u) * 3); }
+  .hero__foto .carimbo { width: 100%; }
+}
 @media (min-width: 900px) { .hero__foto { margin-right: calc(-1 * max(var(--gutter), (100vw - 1280px) / 2 + var(--gutter))); } }
 .hero__foto .carimbo { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 135%; max-height: 100%; aspect-ratio: 1774 / 887; }
 .hero__foto img { display: block; width: 100%; height: 100%; object-fit: contain; object-position: 50% 100%; }
