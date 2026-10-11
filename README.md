@@ -4,6 +4,7 @@ Duas páginas de referência visual para o grupo aprovar antes de ir para o Djan
 
 - `index.html` — página inicial (vitrinecps.com.br)
 - `projeto.html` — página pública de um projeto (/projeto/<slug>/), com projeto de exemplo
+- `votar.html` — avaliação de um projeto pelo visitante credenciado (/votar/<slug>/): notas 1–5 em três critérios. Sem link a partir das páginas públicas (guardrail 8); abrir pela URL.
 - `fachada.webp` — fachada da Fatec tratada (P&B + placa vermelha, fundo transparente)
 
 Tudo é exemplo: projetos, capas, nomes e textos de impacto. Links para rotas do sistema
@@ -27,3 +28,4 @@ As páginas têm `noindex`. Para desligar, apague o recurso no Coolify e o hostn
 - `projeto.html` → `vitrine/templates/vitrine/projeto.html` + `_corpo_projeto.html`
   (área do projeto em `div.area-projeto`; tema por projeto é proposta para a próxima edição).
 - Seção "Impacto": decidir entre campos novos (`impacto_social`, `impacto_ambiental`) ou convenção na `descricao`.
+- Avaliação por notas (votar.html): exige mudar specs 03 e 04 e o model `Voto` (três notas 1–5; público = média). Fallback: mesmo layout com um botão "Votar neste projeto".
