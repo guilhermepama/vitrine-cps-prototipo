@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Vitrine CPS — protótipo v1</title>
+  <meta name="description" content="Protótipo v1 do Vitrine CPS — para avaliação do grupo. Projetos, capas e nomes são exemplos.">
+</head>
+<body>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* ============================================================
+   VITRINE CPS — página inicial, linha "brutalismo elegante"
+   Estrutura exposta: a grade e as linhas organizam a informação.
+   Tipo condensado pesado em caixa alta; papel, tinta e um vermelho.
+   Sem cantos arredondados, sem sombra, sem gradiente.
+   Nenhum caminho para o voto (G8).
+   ============================================================ */
+:root {
+  /* paleta tirada do campus: bloco de concreto, azul estrutural, placa vermelha */
+  --papel: #ECE7DA;          /* bloco, clareado para leitura */
+  --papel-2: #F5F2EA;        /* célula */
+  --tinta: #121316;
+  --tinta-2: #4F5159;
+  --linha: #121316;          /* linhas estruturais em tinta; o azul fica nos acentos */
+  --linha-fraca: #C9C2AE;    /* junta dos blocos */
+  --azul: #b20000;             /* acento = vermelho (token mantido pelo nome para não quebrar regras) */
+  --azul-texto: #FFFFFF;
+  --vermelho: #b20000;       /* vermelho da marca: acento e ação */
+  --vermelho-texto: #FFFFFF;
+  --sobre-tinta: #F3F2EC;
+  --sobre-tinta-2: #9A9CA3;
+
+  --fonte-display: "Archivo", "Archivo Narrow", "Arial Narrow", sans-serif;
+  --fonte: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", monospace;
+
+  --t-12: 0.75rem; --t-13: 0.8125rem; --t-14: 0.875rem; --t-16: 1rem; --t-18: 1.125rem; --t-22: 1.375rem;
+  --t-hero: clamp(2.5rem, 1rem + 5vw, 5rem);
+  --t-h2: clamp(2rem, 1rem + 4vw, 4rem);
+  --t-card: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+
+  --mescla-foto: multiply;   /* claro: a foto ganha o tom do bloco */
+  --opacidade-foto: .92;
+
+  --u: 8px;
+  --gutter: 16px;
+  --alvo: 44px;
+}
+@media (min-width: 720px) { :root { --gutter: 32px; } }
+:root.proto-escuro {
+  --papel: #17181B; --papel-2: #1F2024; --tinta: #F0EFEA; --tinta-2: #B4B6BC;
+    --linha: #F0EFEA; --linha-fraca: #36383E; --azul: #FF4A44; --azul-texto: #FFFFFF;
+    --vermelho: #FF4A44; --vermelho-texto: #FFFFFF;
+    --sobre-tinta: #17181B; --sobre-tinta-2: #66686E; --mescla-foto: normal; --opacidade-foto: .9; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; font-family: var(--fonte); font-size: var(--t-16); line-height: 1.5; color: var(--tinta); background: var(--papel); overflow-wrap: break-word; -webkit-font-smoothing: antialiased; }
+img, svg { max-width: 100%; display: block; }
+h1, h2, h3, p, ul, ol, figure { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--vermelho); outline-offset: -3px; }
+
+.display { font-family: var(--fonte-display); font-variation-settings: "wdth" 62, "wght" 800; font-weight: 800; text-transform: uppercase; letter-spacing: -0.01em; line-height: 0.9; color: var(--tinta); }
+.mono { font-family: var(--mono); font-size: var(--t-12); letter-spacing: 0.04em; text-transform: uppercase; color: var(--tinta-2); }
+
+.faixa-w { border-bottom: 1px solid var(--linha); }
+.container { max-width: 1280px; margin: 0 auto; padding-inline: var(--gutter); }
+
+/* ---------- TOPO ---------- */
+.topo { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 4; background: var(--papel); border-bottom: 1px solid var(--linha); }
+.topo__linha { display: flex; align-items: stretch; justify-content: space-between; min-height: 56px; }
+.marca { position: relative; display: flex; align-items: center; gap: 12px; text-decoration: none; padding-inline: var(--gutter); margin-left: calc(-1 * var(--gutter)); background: var(--vermelho); color: #FFFFFF; }
+.marca::before { content: ""; position: absolute; top: 0; bottom: 0; right: 100%; width: 50vw; background: var(--vermelho); } /* o vermelho segue até a borda da tela */
+.topo { overflow: hidden; }
+.marca__logo { height: 34px; width: auto; display: block; color: #FFFFFF; }
+.nav { display: flex; align-items: stretch; }
+.nav a { display: inline-flex; align-items: center; gap: 10px; padding: 0 16px; text-decoration: none; font-family: var(--mono); font-size: var(--t-13); text-transform: uppercase; letter-spacing: 0.04em; border-left: 1px solid var(--linha-fraca); }
+.nav a:first-child { border-left: 0; }
+.nav a:hover { background: var(--azul); color: var(--azul-texto); }
+.nav .idx { color: var(--azul); }
+.nav a.nav--botao { background: var(--vermelho); color: #FFFFFF; border-left: 0; margin-left: 8px; }
+.nav a.nav--botao:hover { background: var(--tinta); color: var(--papel); }
+.nav .so-desktop { display: none; }
+@media (min-width: 720px) { .nav .so-desktop { display: inline-flex; } .nav a { padding: 0 24px; } }
+
+/* ---------- HERO: texto de um lado, campus do outro ---------- */
+.hero { border-bottom: 1px solid var(--linha); }
+.hero__grade { display: grid; }
+@media (min-width: 900px) { .hero__grade { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); } }
+.hero__esq { padding-block: calc(var(--u) * 5) calc(var(--u) * 6); }
+@media (min-width: 900px) { .hero__esq { padding-block: calc(var(--u) * 5) calc(var(--u) * 5); padding-right: clamp(32px, 6vw, 96px); border-right: 1px solid var(--linha); } }
+.hero__edicao { display: flex; justify-content: space-between; gap: 16px; margin-bottom: calc(var(--u) * 3); }
+.hero h1 { font-size: var(--t-hero); overflow-wrap: normal; hyphens: manual; max-width: 22ch; }
+.hero h1 .ponto, .hero h1 .destaque { color: var(--vermelho); }
+.hero__texto { margin-top: calc(var(--u) * 3); max-width: 48em; font-size: var(--t-16); line-height: 1.45; color: var(--tinta-2); }
+.hero__texto strong { color: var(--tinta); font-weight: 600; }
+.hero__acoes { display: flex; flex-wrap: wrap; gap: 12px; margin-top: calc(var(--u) * 3); }
+
+/* a foto ocupa a célula inteira e sangra até a borda direita da tela */
+.hero__foto { display: flex; flex-direction: column; min-height: 240px; background: var(--papel); margin: 0; }
+.hero__foto .quadro { position: relative; flex: 1; overflow: hidden; }
+@media (max-width: 899px) { .hero__foto { order: -1; margin-inline: calc(-1 * var(--gutter)); aspect-ratio: 16 / 9; border-bottom: 1px solid var(--linha); } }
+@media (min-width: 900px) { .hero__foto { margin-right: calc(-1 * max(var(--gutter), (100vw - 1280px) / 2 + var(--gutter))); } }
+.hero__foto .carimbo { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 135%; max-height: 100%; aspect-ratio: 1774 / 887; }
+.hero__foto img { display: block; width: 100%; height: 100%; object-fit: contain; object-position: 50% 100%; }
+
+/* composição no sistema de coordenadas da imagem: grade, contorno (longe), quadrado (meio), prédio, anotações */
+.hero__fundo { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.hero__fundo line { stroke: var(--tinta); stroke-width: .5; opacity: .14; vector-effect: non-scaling-stroke; }
+.hero__fundo .contorno { fill: none; stroke: var(--tinta); stroke-width: 1; vector-effect: non-scaling-stroke; opacity: .7; }
+.hero__fundo .quadrao, .hero__fundo .pixel { fill: var(--vermelho); }
+.hero__fundo .papel { fill: var(--papel); }
+.hero__foto .carimbo img { position: relative; z-index: 1; }
+.hero__foto .carimbo { z-index: 1; }
+/* prancha de levantamento: linhas de construção, cotas e ângulos medidos no desenho */
+.hero__prancha { position: absolute; inset: 0; z-index: 2; width: 100%; height: 100%; overflow: visible; pointer-events: none; font-family: var(--mono); }
+.hero__prancha line, .hero__prancha path { fill: none; stroke: var(--tinta); vector-effect: non-scaling-stroke; }
+.hero__prancha .grade { stroke-width: .5; opacity: .14; }
+.hero__prancha .constr { stroke-width: .8; stroke-dasharray: 6 5; opacity: .55; }
+.hero__prancha .cota { stroke-width: .8; opacity: .7; }
+.hero__prancha .arco { stroke: var(--vermelho); stroke-width: 1.2; }
+.hero__prancha .cruz { stroke-width: .8; opacity: .5; }
+.hero__prancha .no { fill: var(--vermelho); stroke: var(--papel); stroke-width: 2; }
+.hero__prancha text { font-size: 20px; fill: var(--tinta-2); letter-spacing: .04em; text-transform: uppercase; }
+.hero__prancha .medida { fill: var(--vermelho); font-size: 24px; }
+.hero__prancha .coord { font-size: 18px; }
+.hero__prancha .coord--sobre-vermelho { fill: var(--papel); } /* controle pela largura: 100% = sem corte; cada 10% a mais corta ~5% de cada lado */ /* metade da altura do quadro, assentada na base, sem corte */
+.hero__foto figcaption { flex: none; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px; padding: 10px var(--gutter); background: var(--tinta); border-top: 1px solid var(--linha); color: var(--papel); }
+
+/* ficha do evento: uma linha de células, como a barra dos cursos */
+.ficha { display: grid; border-bottom: 1px solid var(--linha); }
+@media (min-width: 720px) { .ficha { grid-template-columns: auto repeat(4, minmax(0, 1fr)); } }
+.ficha__data { padding: 12px var(--gutter) 12px 0; border-bottom: 1px solid var(--linha-fraca); display: flex; align-items: center; }
+@media (min-width: 720px) { .ficha__data { border-bottom: 0; border-right: 1px solid var(--linha); padding-right: calc(var(--gutter) * 1.5); } }
+.ficha__data .display { font-size: clamp(2.5rem, 1rem + 4vw, 4rem); }
+.ficha__data .display span { color: var(--vermelho); }
+.ficha__linha { display: grid; gap: 4px; padding: 14px var(--gutter) 14px 0; border-bottom: 1px solid var(--linha-fraca); align-content: start; }
+@media (min-width: 720px) { .ficha__linha { padding-left: var(--gutter); border-bottom: 0; border-right: 1px solid var(--linha-fraca); } .ficha__linha:last-child { border-right: 0; } }
+.ficha__valor { font-weight: 500; line-height: 1.35; font-size: var(--t-14); }
+.ficha__valor small { display: block; font-weight: 400; color: var(--tinta-2); font-size: var(--t-13); }
+
+/* cursos: barra de células */
+.cursos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-bottom: 1px solid var(--linha); }
+.curso { display: flex; gap: 12px; align-items: center; padding: 14px var(--gutter); border-right: 1px solid var(--linha-fraca); min-width: 0; }
+.curso:last-child { border-right: 0; }
+.curso .sigla { font-family: var(--fonte-display); font-variation-settings: "wdth" 62, "wght" 800; font-weight: 800; font-size: var(--t-22); line-height: 1; flex: none; }
+.curso .nome { font-size: var(--t-13); line-height: 1.3; color: var(--tinta-2); display: none; }
+@media (min-width: 720px) { .curso .nome { display: block; } }
+
+
+
+/* barra Fatec / Etec em vermelho */
+.faixa-w--vermelha { background: var(--vermelho); color: #FFFFFF; border-bottom-color: var(--linha); }
+.faixa-w--vermelha .cursos { border-bottom: 0; }
+.faixa-w--vermelha .curso { border-right-color: #121316; }
+.faixa-w--vermelha .curso .sigla, .faixa-w--vermelha .curso .nome { color: #FFFFFF; }
+
+/* ---------- SEÇÕES ---------- */
+.secao__cabeca { display: grid; gap: 12px; padding-block: calc(var(--u) * 5) calc(var(--u) * 4); border-bottom: 1px solid var(--linha); }
+@media (min-width: 900px) { .secao__cabeca { grid-template-columns: 1fr auto; align-items: end; } }
+.secao__cabeca h2 { font-size: var(--t-h2); }
+.secao__cabeca .mono { margin-bottom: 12px; }
+.secao__cabeca p { color: var(--tinta-2); max-width: 36em; margin-top: 8px; }
+.filtros { display: flex; flex-wrap: wrap; gap: 0; border: 1px solid var(--linha); width: max-content; max-width: 100%; }
+.chip { min-height: 40px; padding: 0 16px; background: transparent; color: var(--tinta); border: 0; border-right: 1px solid var(--linha); cursor: pointer; font-family: var(--mono); font-size: var(--t-13); text-transform: uppercase; letter-spacing: 0.04em; }
+.chip:last-child { border-right: 0; }
+.chip--ativo { background: var(--azul); color: var(--azul-texto); }
+
+/* turma: linha-título + grade de células */
+.turma[hidden] { display: none; }
+.turma__titulo { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 20px; padding-block: 14px; border-bottom: 1px solid var(--linha); }
+.turma__titulo .display { font-size: var(--t-22); }
+.turma__titulo .mono { flex: 1; }
+.turma__titulo .n { font-family: var(--mono); font-size: var(--t-12); color: var(--tinta-2); }
+
+.cartoes { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); border-bottom: 1px solid var(--linha); }
+.cartao-projeto { display: flex; flex-direction: column; text-decoration: none; color: inherit; background: var(--papel-2); border-right: 1px solid var(--linha-fraca); border-bottom: 1px solid var(--linha-fraca); margin-bottom: -1px; min-width: 0; transition: background-color .12s ease; }
+.cartao-projeto:hover { background: var(--azul); color: var(--azul-texto); }
+.cartao-projeto:hover .display, .cartao-projeto:hover .mono { color: inherit; }
+.cartao-projeto:hover .seta { background: var(--vermelho); color: var(--vermelho-texto); }
+.cartao-projeto svg, .cartao-projeto img { width: 100%; aspect-ratio: 1.91 / 1; object-fit: cover; border-bottom: 1px solid var(--linha-fraca); }
+.cartao-projeto__corpo { padding: 16px var(--gutter) 20px; display: grid; gap: 10px; flex: 1; }
+.cartao-projeto__meta { display: flex; justify-content: space-between; gap: 12px; }
+.cartao-projeto h3 { font-size: var(--t-card); }
+.cartao-projeto p { font-size: var(--t-14); line-height: 1.45; color: var(--tinta-2); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.cartao-projeto:hover p { color: var(--sobre-tinta-2); }
+.cartao-projeto__pe { display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 8px; }
+.seta { width: 32px; height: 32px; display: grid; place-items: center; border: 1px solid currentColor; font-family: var(--mono); font-size: 14px; }
+
+/* ---------- COMO VOTAR ---------- */
+.voto { border-bottom: 1px solid var(--linha); }
+.voto__cabeca { display: grid; gap: 16px; padding-block: calc(var(--u) * 5) calc(var(--u) * 4); border-bottom: 1px solid var(--linha); }
+@media (min-width: 900px) { .voto__cabeca { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); align-items: end; } }
+.voto__cabeca h2 { font-size: var(--t-h2); }
+.voto__cabeca h2 .ponto, .voto__cabeca h2 .destaque { color: var(--vermelho); }
+.voto__cabeca p { color: var(--tinta-2); max-width: 32em; }
+.voto__cabeca strong { color: var(--tinta); font-weight: 600; }
+.passos { display: grid; }
+@media (min-width: 720px) { .passos { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.passo { padding: 20px var(--gutter) 24px 0; border-bottom: 1px solid var(--linha-fraca); display: grid; gap: 12px; }
+@media (min-width: 720px) { .passo { border-bottom: 0; border-right: 1px solid var(--linha-fraca); padding-left: var(--gutter); } .passo:first-child { padding-left: 0; } .passo:last-child { border-right: 0; } }
+.passo .num { font-family: var(--fonte-display); font-variation-settings: "wdth" 62, "wght" 800; font-weight: 800; font-size: 3.5rem; line-height: .9; color: var(--azul); }
+.passo h3 { font-size: var(--t-22); }
+.passo p { color: var(--tinta-2); font-size: var(--t-14); line-height: 1.5; }
+.passo a { color: var(--tinta); text-decoration-color: var(--vermelho); text-underline-offset: 3px; }
+.voto__nota { padding-block: 14px; font-family: var(--mono); font-size: var(--t-13); text-transform: uppercase; letter-spacing: .04em; }
+.voto__nota span { color: var(--azul); }
+
+/* ---------- O PROJETO (sobre o Vitrine CPS) ---------- */
+.sobre { border-bottom: 1px solid var(--linha); }
+.sobre__cabeca { display: grid; gap: 16px; padding-block: calc(var(--u) * 5) calc(var(--u) * 4); border-bottom: 1px solid var(--linha); }
+@media (min-width: 900px) { .sobre__cabeca { grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); align-items: end; } }
+.sobre__cabeca h2 { font-size: var(--t-h2); }
+.sobre__cabeca h2 span { color: var(--vermelho); }
+.sobre__texto { color: var(--tinta-2); max-width: 34em; }
+.sobre__texto p + p { margin-top: 12px; }
+.sobre__texto strong { color: var(--tinta); font-weight: 600; }
+.tecnica { display: grid; }
+@media (min-width: 720px) { .tecnica { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1100px) { .tecnica { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.tecnica__cel { padding: 20px var(--gutter) 24px 0; border-bottom: 1px solid var(--linha-fraca); display: grid; gap: 10px; align-content: start; }
+@media (min-width: 720px) { .tecnica__cel { padding-left: var(--gutter); border-right: 1px solid var(--linha-fraca); } .tecnica__cel:nth-child(odd) { padding-left: 0; } .tecnica__cel:nth-child(even) { border-right: 0; } }
+@media (min-width: 1100px) { .tecnica__cel:nth-child(odd) { padding-left: var(--gutter); } .tecnica__cel:nth-child(even) { border-right: 1px solid var(--linha-fraca); } .tecnica__cel:first-child { padding-left: 0; } .tecnica__cel:last-child { border-right: 0; } .tecnica__cel { border-bottom: 0; } }
+.tecnica h3 { font-size: var(--t-22); }
+.tecnica p { font-size: var(--t-14); line-height: 1.5; color: var(--tinta-2); }
+.tecnica a { color: var(--tinta); text-decoration-color: var(--azul); text-underline-offset: 3px; }
+.sobre__pe { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; padding-block: 14px; border-top: 1px solid var(--linha); }
+
+/* ---------- BLOCO DO GRUPO (tinta) ---------- */
+.grupo { background: var(--azul); color: var(--azul-texto); border-bottom: 1px solid var(--linha); }
+.grupo__grade { display: grid; gap: 24px; padding-block: calc(var(--u) * 6); }
+@media (min-width: 900px) { .grupo__grade { grid-template-columns: minmax(0, 8fr) minmax(0, 4fr); align-items: end; } }
+.grupo h2 { font-size: var(--t-h2); color: inherit; }
+.grupo h2 span { color: var(--vermelho-texto); opacity: .55; }
+.grupo p { margin-top: 16px; color: var(--azul-texto); opacity: .8; max-width: 36em; }
+.grupo .mono { color: var(--azul-texto); opacity: .7; margin-bottom: 16px; }
+
+/* ---------- BOTÕES ---------- */
+.botao { display: inline-flex; align-items: center; justify-content: center; gap: 12px; min-height: var(--alvo); padding: 0 20px; border: 1px solid var(--tinta); background: var(--tinta); color: var(--sobre-tinta); text-decoration: none; cursor: pointer; font-family: var(--mono); font-size: var(--t-13); text-transform: uppercase; letter-spacing: .04em; }
+.botao:hover { background: var(--azul); border-color: var(--azul); color: var(--azul-texto); }
+.botao--vazado { background: transparent; color: var(--tinta); }
+.botao--vermelho { background: var(--vermelho); border-color: var(--vermelho); color: var(--vermelho-texto); }
+.botao--vermelho:hover { background: var(--sobre-tinta); border-color: var(--sobre-tinta); color: var(--tinta); }
+.grupo .botao--vazado { color: var(--azul-texto); border-color: var(--azul-texto); }
+.grupo .botao--vazado:hover { background: var(--azul-texto); color: var(--azul); }
+
+/* ---------- RODAPÉ ---------- */
+.rodape { font-size: var(--t-14); }
+.rodape__grade { display: grid; }
+@media (min-width: 720px) { .rodape__grade { grid-template-columns: 2fr 1fr 1fr; } }
+.rodape__col { padding: 24px var(--gutter) 24px 0; border-bottom: 1px solid var(--linha-fraca); }
+@media (min-width: 720px) { .rodape__col { border-bottom: 0; border-right: 1px solid var(--linha-fraca); padding-left: var(--gutter); } .rodape__col:first-child { padding-left: 0; } .rodape__col:last-child { border-right: 0; } }
+.rodape .mono { margin-bottom: 12px; }
+.rodape p { color: var(--tinta-2); max-width: 40em; }
+.rodape li + li { margin-top: 6px; }
+.rodape a { text-decoration: none; }
+.rodape a:hover { color: var(--azul); }
+.rodape__fim { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; padding-block: 14px; border-top: 1px solid var(--linha); }
+
+.proto { position: sticky; bottom: 0; z-index: 5; display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding: 8px var(--gutter); padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px)); background: var(--papel-2); border-top: 1px dashed var(--linha); font-family: var(--mono); font-size: var(--t-12); color: var(--tinta-2); }
+.proto label { display: inline-flex; align-items: center; gap: 6px; color: var(--tinta); }
+.proto__tag { color: var(--vermelho); }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<header class="topo">
+  <div class="container topo__linha">
+    <a class="marca" href="index.html" aria-label="Vitrine CPS, página inicial"><svg class="marca__logo" viewBox="0 0 419 87" role="img" aria-label="Vitrine CPS Olímpia" fill="currentColor"> <g transform="matrix(1,0,0,1,-505.380946,-180.364321)"> <g> <g transform="matrix(-1.978145,0,0,1.375,2151.967332,-362.548586)"> <g transform="matrix(1,0,0,1,-321,87)"> <path d="M942.044,343.93L942.044,335.633L990.173,307.846L994.438,310.002L990.374,312.349L990.374,315.871L942.044,343.93Z"/> </g> <g transform="matrix(1,0,0,1,-321,87)"> <path d="M942.044,347.724L1001.513,313.578L1005.778,315.735L990.374,324.629L990.374,328.158L942.044,356.443L942.044,347.724Z"/> </g> <g transform="matrix(1,0,0,1,-321,87)"> <path d="M942.044,361.6L1013.94,319.861L1018.206,322.017L990.374,338.626L990.374,342.056L942.044,370.182L942.044,361.6Z"/> </g> <g transform="matrix(1,0,0,1,-321,87)"> <path d="M947.658,371L1025.827,325.87L1030.092,328.026L990.374,350.957L990.374,354.462L962.175,371L947.658,371Z"/> </g> <g transform="matrix(1,0,0,1,-321,87)"> <path d="M967.812,371L1036.572,331.302L1040.837,333.458L990.374,362.593L990.374,366.304L982.812,371L967.812,371Z"/> </g> <g transform="matrix(1,0,0,1,-321,87)"> <path d="M990.374,371L1043.888,340.104L1043.888,344.722L998.374,371L990.374,371Z"/> </g> <g transform="matrix(1,0,0,1,-321,87)"> <path d="M1012.668,371L1043.888,352.975L1043.888,357.594L1020.668,371L1012.668,371Z"/> </g> <g transform="matrix(1,0,0,1,-321,87)"> <path d="M1032.822,371L1043.888,364.611L1043.888,369.23L1040.822,371L1032.822,371Z"/> </g> </g> <g transform="matrix(0.997155,0,0,0.997155,-53.942079,-7.505606)"> <path d="M570.201,231.948L560.919,197.28L567.008,197.28L574.498,226.816L574.937,226.816L582.428,197.28L588.517,197.28L579.234,231.948L570.201,231.948Z" style="fill-rule:nonzero;"/> <path d="M601.08,231.948L601.08,197.28L606.9,197.28L606.9,231.948L601.08,231.948ZM593.219,231.948L593.219,226.607L614.811,226.607L614.811,231.948L593.219,231.948ZM593.219,202.608L593.219,197.28L614.811,197.28L614.811,202.608L593.219,202.608Z" style="fill-rule:nonzero;"/> <path d="M630.401,231.948L630.401,197.28L636.222,197.28L636.222,231.948L630.401,231.948ZM620.367,202.695L620.367,197.28L646.256,197.28L646.256,202.695L620.367,202.695Z" style="fill-rule:nonzero;"/> <path d="M656.607,219.058L656.607,213.643L663.292,213.643C664.965,213.643 666.267,213.172 667.198,212.229C668.129,211.287 668.595,209.966 668.595,208.267C668.595,206.486 668.129,205.112 667.198,204.146C666.267,203.179 664.965,202.695 663.292,202.695L656.705,202.695L656.119,197.28L663.292,197.28C666.967,197.28 669.807,198.192 671.812,200.015C673.818,201.838 674.82,204.426 674.82,207.778C674.82,211.35 673.818,214.122 671.812,216.096C669.807,218.071 666.967,219.058 663.292,219.058L656.607,219.058ZM651.129,231.948L651.129,197.28L656.949,197.28L656.949,231.948L651.129,231.948ZM669.132,231.948L662.101,215.64L668.321,215.64L676.09,231.948L669.132,231.948Z" style="fill-rule:nonzero;"/> <path d="M688.971,231.948L688.971,197.28L694.791,197.28L694.791,231.948L688.971,231.948ZM681.109,231.948L681.109,226.607L702.701,226.607L702.701,231.948L681.109,231.948ZM681.109,202.608L681.109,197.28L702.701,197.28L702.701,202.608L681.109,202.608Z" style="fill-rule:nonzero;"/> <path d="M724.21,231.948L716.251,205.142L713.756,205.142L713.756,197.28L718.194,197.28L726.153,224.087L727.623,224.087L727.623,231.948L724.21,231.948ZM709.918,231.948L709.918,197.28L715.514,197.28L715.514,231.948L709.918,231.948ZM726.891,231.948L726.891,197.28L732.486,197.28L732.486,231.948L726.891,231.948Z" style="fill-rule:nonzero;"/> <path d="M739.508,231.948L739.508,197.28L745.328,197.28L745.328,231.948L739.508,231.948ZM739.508,231.948L739.508,226.533L762.955,226.533L762.955,231.948L739.508,231.948ZM739.508,217.305L739.508,211.875L758.561,211.875L758.561,217.305L739.508,217.305ZM739.508,202.695L739.508,197.28L762.955,197.28L762.955,202.695L739.508,202.695Z" style="fill-rule:nonzero;"/> </g> <g transform="matrix(0.997155,0,0,0.997155,63.874075,31.726141)"> <path d="M578.331,232.437C567.39,232.437 561.92,226.48 561.92,214.566C561.92,208.918 563.298,204.544 566.055,201.443C568.813,198.342 572.709,196.792 577.745,196.792C580.079,196.792 582.133,197.166 583.907,197.913C585.681,198.66 587.005,199.723 587.877,201.103L584.264,205.366C583.531,204.377 582.599,203.612 581.468,203.074C580.337,202.535 579.112,202.266 577.794,202.266C574.858,202.266 572.505,203.312 570.736,205.403C568.967,207.495 568.082,210.467 568.082,214.321C568.082,222.739 571.775,226.948 579.161,226.948C581.521,226.948 583.849,226.46 586.144,225.484L587.267,230.776C584.435,231.883 581.456,232.437 578.331,232.437Z" style="fill-rule:nonzero;"/> <path d="M598.258,221.69L598.258,216.275L603.478,216.275C605.825,216.275 607.621,215.658 608.866,214.424C610.111,213.19 610.733,211.433 610.733,209.151C610.733,207.061 610.111,205.462 608.866,204.356C607.621,203.249 605.825,202.695 603.478,202.695L598.356,202.695L598.356,197.28L603.478,197.28C607.823,197.28 611.157,198.281 613.477,200.281C615.798,202.281 616.959,205.155 616.959,208.901C616.959,213.016 615.798,216.176 613.477,218.381C611.157,220.587 607.823,221.69 603.478,221.69L598.258,221.69ZM593.023,231.948L593.023,197.28L598.844,197.28L598.844,231.948L593.023,231.948Z" style="fill-rule:nonzero;"/> <path d="M632.115,232.437C630.146,232.437 628.261,232.273 626.461,231.946C624.661,231.619 623.028,231.148 621.563,230.532L622.345,224.605C624.135,225.36 625.894,225.939 627.62,226.343C629.347,226.747 630.976,226.948 632.506,226.948C634.462,226.948 635.94,226.603 636.939,225.914C637.939,225.223 638.438,224.206 638.438,222.861C638.438,221.126 637.444,219.798 635.455,218.877L630.064,216.333C627.646,215.181 625.779,213.77 624.464,212.1C623.149,210.43 622.491,208.501 622.491,206.314C622.491,203.286 623.456,200.943 625.386,199.282C627.317,197.622 630.048,196.792 633.58,196.792C635.79,196.792 637.827,197.153 639.691,197.876C641.554,198.599 643.263,199.694 644.815,201.162L640.782,205.611C639.536,204.497 638.321,203.661 637.14,203.103C635.958,202.545 634.78,202.266 633.604,202.266C632.075,202.266 630.886,202.61 630.04,203.298C629.194,203.987 628.77,204.994 628.77,206.319C628.77,207.227 629.059,208.028 629.637,208.721C630.215,209.414 631.051,210.038 632.145,210.591L636.988,212.998C639.482,214.242 641.393,215.674 642.723,217.295C644.053,218.916 644.718,220.783 644.718,222.896C644.718,225.998 643.645,228.364 641.5,229.993C639.355,231.622 636.226,232.437 632.115,232.437Z" style="fill-rule:nonzero;"/> </g> <g transform="matrix(0.471763,0,0,0.498852,247.566954,142.31064)"> <path d="M592.052,199.771C593.533,201.398 594.668,203.392 595.458,205.752C596.247,208.112 596.642,210.79 596.642,213.784C596.642,216.779 596.239,219.461 595.433,221.829C594.627,224.197 593.5,226.17 592.052,227.749C590.554,229.393 588.784,230.63 586.742,231.46C584.699,232.29 582.367,232.705 579.747,232.705C577.192,232.705 574.868,232.282 572.777,231.436C570.685,230.589 568.907,229.36 567.442,227.749C565.978,226.138 564.85,224.16 564.061,221.817C563.272,219.473 562.877,216.795 562.877,213.784C562.877,210.822 563.268,208.165 564.049,205.813C564.83,203.461 565.969,201.447 567.467,199.771C568.899,198.176 570.677,196.955 572.801,196.109C574.925,195.262 577.241,194.839 579.747,194.839C582.351,194.839 584.691,195.266 586.766,196.121C588.841,196.975 590.603,198.192 592.052,199.771ZM591.612,213.784C591.612,209.064 590.554,205.422 588.438,202.859C586.323,200.296 583.434,199.014 579.771,199.014C576.077,199.014 573.176,200.296 571.068,202.859C568.96,205.422 567.906,209.064 567.906,213.784C567.906,218.553 568.98,222.203 571.129,224.734C573.277,227.265 576.158,228.53 579.771,228.53C583.385,228.53 586.262,227.265 588.402,224.734C590.542,222.203 591.612,218.553 591.612,213.784Z" style="fill-rule:nonzero;"/> <path d="M627.306,231.948L604.308,231.948L604.308,195.596L609.142,195.596L609.142,227.651L627.306,227.651L627.306,231.948Z" style="fill-rule:nonzero;"/> <path d="M644.957,231.948L630.602,231.948L630.602,228.237L635.362,228.237L635.362,199.307L630.602,199.307L630.602,195.596L644.957,195.596L644.957,199.307L640.196,199.307L640.196,228.237L644.957,228.237L644.957,231.948ZM644.957,181.924L638.292,191.055L634.654,191.055L639.024,181.924L644.957,181.924Z" style="fill-rule:nonzero;"/> <path d="M685.558,231.948L680.724,231.948L680.724,200.625L670.616,221.939L667.735,221.939L657.701,200.625L657.701,231.948L653.185,231.948L653.185,195.596L659.776,195.596L669.469,215.835L678.844,195.596L685.558,195.596L685.558,231.948Z" style="fill-rule:nonzero;"/> <path d="M719.103,206.582C719.103,208.193 718.822,209.687 718.26,211.062C717.699,212.437 716.913,213.63 715.904,214.639C714.651,215.892 713.17,216.832 711.461,217.459C709.752,218.085 707.595,218.399 704.991,218.399L700.157,218.399L700.157,231.948L695.323,231.948L695.323,195.596L705.187,195.596C707.367,195.596 709.215,195.779 710.729,196.145C712.242,196.511 713.585,197.085 714.757,197.866C716.14,198.794 717.21,199.95 717.967,201.333C718.724,202.717 719.103,204.466 719.103,206.582ZM714.073,206.704C714.073,205.451 713.854,204.36 713.414,203.433C712.975,202.505 712.307,201.748 711.412,201.162C710.631,200.658 709.74,200.296 708.739,200.076C707.738,199.856 706.472,199.746 704.942,199.746L700.157,199.746L700.157,214.273L704.234,214.273C706.187,214.273 707.774,214.098 708.995,213.748C710.216,213.398 711.209,212.84 711.974,212.075C712.739,211.294 713.28,210.472 713.597,209.609C713.915,208.747 714.073,207.778 714.073,206.704Z" style="fill-rule:nonzero;"/> <path d="M738.292,231.948L723.937,231.948L723.937,228.237L728.697,228.237L728.697,199.307L723.937,199.307L723.937,195.596L738.292,195.596L738.292,199.307L733.531,199.307L733.531,228.237L738.292,228.237L738.292,231.948Z" style="fill-rule:nonzero;"/> <path d="M775.182,231.948L770.03,231.948L766.466,221.817L750.743,221.817L747.179,231.948L742.271,231.948L755.504,195.596L761.949,195.596L775.182,231.948ZM764.977,217.666L758.604,199.819L752.208,217.666L764.977,217.666Z" style="fill-rule:nonzero;"/> </g> </g> </g> </svg></a>
+    <nav class="nav" aria-label="Principal">
+      <a href="#mostra" class="so-desktop"><span class="idx" aria-hidden="true">01</span>A Mostra</a>
+      <a href="#projetos"><span class="idx" aria-hidden="true">02</span>Projetos</a>
+      <a href="#projeto" class="so-desktop"><span class="idx" aria-hidden="true">03</span>Quem faz</a>
+      <a href="#" title="Na produção: /grupo/" class="nav--botao">Área do grupo</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container hero__grade">
+    <div class="hero__esq">
+      <div class="hero__edicao mono"><span>Mostra de Projetos · Edição 2026/2</span><span>Fatec + Etec Olímpia</span></div>
+      <h1 class="display">Venha ver a <span class="destaque">inovação crescendo em Olímpia</span> com seus próprios olhos<span class="ponto">.</span></h1>
+      <p class="hero__texto">Turismo e tecnologia movem Olímpia, e são exatamente os cursos que a Fatec trouxe para a cidade. Na <strong>Mostra de Projetos</strong>, os alunos da <strong>Fatec</strong> e da <strong>Etec Olímpia</strong> apresentam o que criaram neste semestre: software, soluções para problemas reais da cidade, roteiros e eventos para quem vive aqui e para quem nos visita. Uma noite para a comunidade ver de perto o que está nascendo em Olímpia, conversar com quem fez e escolher seus favoritos.</p>
+      <div class="hero__acoes">
+        <a class="botao botao--vermelho" href="#projetos">Ver os projetos</a>
+        <a class="botao botao--vazado" href="#mostra">Sobre a Mostra</a>
+      </div>
+    </div>
+    <figure class="hero__foto">
+      <div class="quadro"><div class="carimbo"><svg class="hero__fundo" viewBox="0 0 1774 887" aria-hidden="true"><line class="grade" x1="-1035" y1="-2200" x2="-1035" y2="887"/><line class="grade" x1="-961" y1="-2200" x2="-961" y2="887"/><line class="grade" x1="-887" y1="-2200" x2="-887" y2="887"/><line class="grade" x1="-813" y1="-2200" x2="-813" y2="887"/><line class="grade" x1="-739" y1="-2200" x2="-739" y2="887"/><line class="grade" x1="-665" y1="-2200" x2="-665" y2="887"/><line class="grade" x1="-591" y1="-2200" x2="-591" y2="887"/><line class="grade" x1="-517" y1="-2200" x2="-517" y2="887"/><line class="grade" x1="-444" y1="-2200" x2="-444" y2="887"/><line class="grade" x1="-370" y1="-2200" x2="-370" y2="887"/><line class="grade" x1="-296" y1="-2200" x2="-296" y2="887"/><line class="grade" x1="-222" y1="-2200" x2="-222" y2="887"/><line class="grade" x1="-148" y1="-2200" x2="-148" y2="887"/><line class="grade" x1="-74" y1="-2200" x2="-74" y2="887"/><line class="grade" x1="0" y1="-2200" x2="0" y2="887"/><line class="grade" x1="74" y1="-2200" x2="74" y2="887"/><line class="grade" x1="148" y1="-2200" x2="148" y2="887"/><line class="grade" x1="222" y1="-2200" x2="222" y2="887"/><line class="grade" x1="296" y1="-2200" x2="296" y2="887"/><line class="grade" x1="370" y1="-2200" x2="370" y2="887"/><line class="grade" x1="444" y1="-2200" x2="444" y2="887"/><line class="grade" x1="517" y1="-2200" x2="517" y2="887"/><line class="grade" x1="591" y1="-2200" x2="591" y2="887"/><line class="grade" x1="665" y1="-2200" x2="665" y2="887"/><line class="grade" x1="739" y1="-2200" x2="739" y2="887"/><line class="grade" x1="813" y1="-2200" x2="813" y2="887"/><line class="grade" x1="887" y1="-2200" x2="887" y2="887"/><line class="grade" x1="961" y1="-2200" x2="961" y2="887"/><line class="grade" x1="1035" y1="-2200" x2="1035" y2="887"/><line class="grade" x1="1109" y1="-2200" x2="1109" y2="887"/><line class="grade" x1="1183" y1="-2200" x2="1183" y2="887"/><line class="grade" x1="1257" y1="-2200" x2="1257" y2="887"/><line class="grade" x1="1330" y1="-2200" x2="1330" y2="887"/><line class="grade" x1="1404" y1="-2200" x2="1404" y2="887"/><line class="grade" x1="1478" y1="-2200" x2="1478" y2="887"/><line class="grade" x1="1552" y1="-2200" x2="1552" y2="887"/><line class="grade" x1="1626" y1="-2200" x2="1626" y2="887"/><line class="grade" x1="1700" y1="-2200" x2="1700" y2="887"/><line class="grade" x1="1774" y1="-2200" x2="1774" y2="887"/><line class="grade" x1="1848" y1="-2200" x2="1848" y2="887"/><line class="grade" x1="1922" y1="-2200" x2="1922" y2="887"/><line class="grade" x1="1996" y1="-2200" x2="1996" y2="887"/><line class="grade" x1="2070" y1="-2200" x2="2070" y2="887"/><line class="grade" x1="2144" y1="-2200" x2="2144" y2="887"/><line class="grade" x1="2218" y1="-2200" x2="2218" y2="887"/><line class="grade" x1="2291" y1="-2200" x2="2291" y2="887"/><line class="grade" x1="2365" y1="-2200" x2="2365" y2="887"/><line class="grade" x1="2439" y1="-2200" x2="2439" y2="887"/><line class="grade" x1="2513" y1="-2200" x2="2513" y2="887"/><line class="grade" x1="2587" y1="-2200" x2="2587" y2="887"/><line class="grade" x1="2661" y1="-2200" x2="2661" y2="887"/><line class="grade" x1="2735" y1="-2200" x2="2735" y2="887"/><line class="grade" x1="2809" y1="-2200" x2="2809" y2="887"/><line class="grade" x1="2883" y1="-2200" x2="2883" y2="887"/><line class="grade" x1="-1200" y1="-2218" x2="2974" y2="-2218"/><line class="grade" x1="-1200" y1="-2144" x2="2974" y2="-2144"/><line class="grade" x1="-1200" y1="-2070" x2="2974" y2="-2070"/><line class="grade" x1="-1200" y1="-1996" x2="2974" y2="-1996"/><line class="grade" x1="-1200" y1="-1922" x2="2974" y2="-1922"/><line class="grade" x1="-1200" y1="-1848" x2="2974" y2="-1848"/><line class="grade" x1="-1200" y1="-1774" x2="2974" y2="-1774"/><line class="grade" x1="-1200" y1="-1700" x2="2974" y2="-1700"/><line class="grade" x1="-1200" y1="-1626" x2="2974" y2="-1626"/><line class="grade" x1="-1200" y1="-1552" x2="2974" y2="-1552"/><line class="grade" x1="-1200" y1="-1478" x2="2974" y2="-1478"/><line class="grade" x1="-1200" y1="-1404" x2="2974" y2="-1404"/><line class="grade" x1="-1200" y1="-1330" x2="2974" y2="-1330"/><line class="grade" x1="-1200" y1="-1257" x2="2974" y2="-1257"/><line class="grade" x1="-1200" y1="-1183" x2="2974" y2="-1183"/><line class="grade" x1="-1200" y1="-1109" x2="2974" y2="-1109"/><line class="grade" x1="-1200" y1="-1035" x2="2974" y2="-1035"/><line class="grade" x1="-1200" y1="-961" x2="2974" y2="-961"/><line class="grade" x1="-1200" y1="-887" x2="2974" y2="-887"/><line class="grade" x1="-1200" y1="-813" x2="2974" y2="-813"/><line class="grade" x1="-1200" y1="-739" x2="2974" y2="-739"/><line class="grade" x1="-1200" y1="-665" x2="2974" y2="-665"/><line class="grade" x1="-1200" y1="-591" x2="2974" y2="-591"/><line class="grade" x1="-1200" y1="-517" x2="2974" y2="-517"/><line class="grade" x1="-1200" y1="-444" x2="2974" y2="-444"/><line class="grade" x1="-1200" y1="-370" x2="2974" y2="-370"/><line class="grade" x1="-1200" y1="-296" x2="2974" y2="-296"/><line class="grade" x1="-1200" y1="-222" x2="2974" y2="-222"/><line class="grade" x1="-1200" y1="-148" x2="2974" y2="-148"/><line class="grade" x1="-1200" y1="-74" x2="2974" y2="-74"/><line class="grade" x1="-1200" y1="0" x2="2974" y2="0"/><line class="grade" x1="-1200" y1="74" x2="2974" y2="74"/><line class="grade" x1="-1200" y1="148" x2="2974" y2="148"/><line class="grade" x1="-1200" y1="222" x2="2974" y2="222"/><line class="grade" x1="-1200" y1="296" x2="2974" y2="296"/><line class="grade" x1="-1200" y1="370" x2="2974" y2="370"/><line class="grade" x1="-1200" y1="444" x2="2974" y2="444"/><line class="grade" x1="-1200" y1="517" x2="2974" y2="517"/><line class="grade" x1="-1200" y1="591" x2="2974" y2="591"/><line class="grade" x1="-1200" y1="665" x2="2974" y2="665"/><line class="grade" x1="-1200" y1="739" x2="2974" y2="739"/><line class="grade" x1="-1200" y1="813" x2="2974" y2="813"/><line class="grade" x1="-1200" y1="887" x2="2974" y2="887"/><rect class="contorno" x="924" y="-296" width="370" height="370"/><rect class="quadrao" x="998" y="-222" width="370" height="370"/><rect class="papel" x="1294" y="-222" width="74" height="74"/><rect class="pixel" x="1404" y="-259" width="37" height="37"/><rect class="pixel" x="1330" y="-333" width="37" height="37"/><rect class="pixel" x="1441" y="-333" width="37" height="37"/><rect class="pixel" x="1404" y="-407" width="18" height="18"/><rect class="pixel" x="1478" y="-259" width="18" height="18"/><rect class="pixel" x="1515" y="-370" width="18" height="18"/><rect class="pixel" x="1294" y="-407" width="18" height="18"/><rect class="pixel" x="1478" y="-444" width="9" height="9"/><rect class="pixel" x="1552" y="-296" width="9" height="9"/><rect class="pixel" x="1367" y="-480" width="9" height="9"/></svg><img src="fachada.webp" alt="Fachada da Fatec Olímpia recortada: prédio de blocos de concreto com a placa Fatec Olímpia, em preto e branco com a faixa vermelha da placa em cor" width="1774" height="887"><svg class="hero__prancha" viewBox="0 0 1774 887" aria-hidden="true"><line class="constr" x1="1250" y1="-25" x2="-82" y2="381"/><line class="constr" x1="1093" y1="-71" x2="1769" y2="616"/><line class="constr" x1="1151" y1="-2000" x2="1163" y2="887"/><line class="constr" x1="161" y1="356" x2="1337" y2="20"/><line class="constr" x1="161" y1="529" x2="1337" y2="292"/><path class="arco" d="M1049 36A120 120 0 0 0 1248 87"/><text class="medida" x="1182" y="161" text-anchor="start">117,6°</text><text class="medida" x="694" y="104" text-anchor="end">∠ 17,0°</text><text class="medida" x="1378" y="158" text-anchor="start">∠ 45,5°</text><circle class="no" cx="305" cy="263" r="5"/><circle class="no" cx="1164" cy="1" r="5"/><circle class="no" cx="1520" cy="363" r="5"/><circle class="no" cx="345" cy="303" r="5"/><circle class="no" cx="1080" cy="93" r="5"/><circle class="no" cx="1080" cy="344" r="5"/><circle class="no" cx="345" cy="492" r="5"/><text class="coord coord--sobre-vermelho" x="1180" y="-15" text-anchor="start">x 1164 · y 001</text></svg></div></div>
+      <figcaption class="mono"><span>Fatec Olímpia — onde a Mostra acontece</span><span>Av. Gov. Adhemar Pereira de Barros, km 3</span></figcaption>
+    </figure>
+  </div>
+</section>
+
+
+<div class="faixa-w">
+  <div class="container ficha" aria-label="Dados do evento">
+    <div class="ficha__data"><p class="display">29<span>.</span>10</p></div>
+    <div class="ficha__linha"><span class="mono">Dia e horário</span><span class="ficha__valor">Quinta-feira, 29 de outubro<small>a partir das 19h</small></span></div>
+    <div class="ficha__linha"><span class="mono">Local</span><span class="ficha__valor">Campus da Fatec Olímpia<small>Av. Gov. Adhemar Pereira de Barros, km 3 — Recanto Bela Vista</small></span></div>
+    <div class="ficha__linha"><span class="mono">Entrada</span><span class="ficha__valor">Livre, sem inscrição<small>traga o celular</small></span></div>
+    <div class="ficha__linha"><span class="mono">Para quem</span><span class="ficha__valor">Aberto à comunidade<small>famílias, estudantes, empresas e poder público</small></span></div>
+  </div>
+</div>
+
+<div class="faixa-w faixa-w--vermelha">
+  <div class="container cursos" aria-label="Instituições participantes">
+    <div class="curso"><span class="sigla">FATEC</span><span class="nome">Desenvolvimento de Software Multiplataforma · Gestão de Turismo</span></div>
+    <div class="curso"><span class="sigla">ETEC</span><span class="nome">Cursos técnicos · Etec Olímpia</span></div>
+  </div>
+</div>
+
+<section class="voto" id="mostra">
+  <div class="container">
+    <div class="voto__cabeca">
+      <div><p class="mono">01 — A Mostra</p><h2 class="display">Uma noite para ver, conversar e avaliar<span class="ponto">.</span></h2></div>
+      <p>O <strong>Vitrine CPS Olímpia</strong> tem o objetivo de mostrar o que acontece dentro da Fatec e da Etec. Na noite de 29 de outubro o campus vira uma feira de projetos. Cada turma monta seu espaço, os grupos apresentam o que construíram e a comunidade circula livremente. Uma <strong>banca de avaliadores</strong> dá nota técnica aos projetos, e o público também participa, avaliando o impacto e a relevância para a sociedade.</p>
+    </div>
+    <ol class="passos">
+      <li class="passo"><span class="num" aria-hidden="true">01</span><h3 class="display">Conheça os projetos</h3><p>Software, aplicativos, roteiros turísticos, eventos e soluções para problemas reais da cidade, apresentados por quem os fez. Pergunte, teste, opine.</p></li>
+      <li class="passo"><span class="num" aria-hidden="true">02</span><h3 class="display">Converse com quem fez</h3><p>Os grupos estão lá para explicar o problema que escolheram, o que funcionou e o que ainda falta. É a melhor parte da noite.</p></li>
+      <li class="passo"><span class="num" aria-hidden="true">03</span><h3 class="display">Escolha seus favoritos</h3><p>Com uma credencial gerada pelo QR code da recepção, você dá notas pelo celular, uma vez por projeto. Sem aplicativo, sem cadastro prévio. <a href="#" title="Na produção: /como-votar/">Como funciona</a></p></li>
+    </ol>
+    <p class="voto__nota"><span>Premiação:</span> nota da banca (70%) + público (30%). Resultado divulgado pela coordenação após o evento.</p>
+  </div>
+</section>
+
+<section id="projetos">
+  <div class="container">
+    <div class="secao__cabeca">
+      <div>
+        <p class="mono">02 — Projetos desta edição</p>
+        <h2 class="display">Oito projetos, cinco turmas<span class="ponto" aria-hidden="true"></span></h2>
+        <p>Software, turismo e gestão, feitos ao longo do semestre por quem estuda em Olímpia. Cada projeto tem a própria página: abra, conheça e compartilhe as que gostar.</p>
+      </div>
+      <div class="filtros" role="group" aria-label="Filtrar por curso">
+        <button class="chip chip--ativo" data-curso="todos" type="button">Todos</button>
+        <button class="chip" data-curso="dsm" type="button">DSM</button>
+        <button class="chip" data-curso="gtur" type="button">GTUR</button>
+        <button class="chip" data-curso="etec" type="button">Etec</button>
+      </div>
+    </div>
+
+    <div class="turma" data-curso="dsm">
+      <h3 class="turma__titulo"><span class="display">DSM — 3º semestre</span><span class="mono">AGO-021 · Gestão Ágil de Projetos de Software</span><span class="n">3 projetos</span></h3>
+      <div class="cartoes">
+        <a class="cartao-projeto" href="projeto.html">
+          <svg viewBox="0 0 382 200" aria-hidden="true"><rect width="382" height="200" fill="#1C2B47"/><g fill="#F3F6FA"><rect x="40" y="70" width="40" height="40"/><rect x="96" y="70" width="40" height="40" opacity=".55"/><rect x="152" y="70" width="40" height="40" opacity=".3"/></g><rect x="40" y="134" width="180" height="8" fill="#E0321F"/></svg>
+          <div class="cartao-projeto__corpo"><div class="cartao-projeto__meta mono"><span>DSM · 3º sem</span><span>4 integrantes</span></div><h3 class="display">Fila Zero</h3><p>Agendamento por WhatsApp para a UBS do Jardim Santa Efigênia. A fila da manhã deixa de existir.</p><div class="cartao-projeto__pe"><span class="mono">Repositório · demo · vídeo</span><span class="seta" aria-hidden="true">→</span></div></div>
+        </a>
+        <a class="cartao-projeto" href="projeto.html">
+          <svg viewBox="0 0 382 200" aria-hidden="true"><rect width="382" height="200" fill="#DADAD5"/><circle cx="120" cy="100" r="54" fill="#121316"/><circle cx="240" cy="100" r="54" fill="#E0321F"/><rect x="40" y="170" width="300" height="6" fill="#121316"/></svg>
+          <div class="cartao-projeto__corpo"><div class="cartao-projeto__meta mono"><span>DSM · 3º sem</span><span>5 integrantes</span></div><h3 class="display">Horta Conectada</h3><p>Sensores de umidade na horta da escola municipal avisam a turma pelo celular quando é hora de regar.</p><div class="cartao-projeto__pe"><span class="mono">Repositório · vídeo</span><span class="seta" aria-hidden="true">→</span></div></div>
+        </a>
+        <a class="cartao-projeto" href="projeto.html">
+          <svg viewBox="0 0 382 200" aria-hidden="true"><rect width="382" height="200" fill="#121316"/><path d="M30 160 L120 90 L200 130 L290 50 L350 80" fill="none" stroke="#E0321F" stroke-width="8"/><rect x="278" y="38" width="24" height="24" fill="#F3F2EC"/></svg>
+          <div class="cartao-projeto__corpo"><div class="cartao-projeto__meta mono"><span>DSM · 3º sem</span><span>4 integrantes</span></div><h3 class="display">Rota Acessível</h3><p>Mapa colaborativo das calçadas do centro de Olímpia com rampas, degraus e obstáculos para cadeirantes.</p><div class="cartao-projeto__pe"><span class="mono">Demo</span><span class="seta" aria-hidden="true">→</span></div></div>
+        </a>
+      </div>
+    </div>
+
+    <div class="turma" data-curso="dsm">
+      <h3 class="turma__titulo"><span class="display">DSM — 2º semestre</span><span class="mono">Trabalho interdisciplinar</span><span class="n">2 projetos</span></h3>
+      <div class="cartoes">
+        <a class="cartao-projeto" href="projeto.html">
+          <svg viewBox="0 0 382 200" aria-hidden="true"><rect width="382" height="200" fill="#F3F2EC"/><rect x="40" y="40" width="130" height="120" fill="#FFFFFF" stroke="#121316"/><rect x="210" y="40" width="130" height="120" fill="#121316"/><rect x="60" y="60" width="90" height="10" fill="#121316"/><rect x="230" y="60" width="90" height="10" fill="#E0321F"/></svg>
+          <div class="cartao-projeto__corpo"><div class="cartao-projeto__meta mono"><span>DSM · 2º sem</span><span>3 integrantes</span></div><h3 class="display">Cantina sem Fila</h3><p>Pedido antecipado para a cantina da Fatec no intervalo das 20h50, com retirada por número.</p><div class="cartao-projeto__pe"><span class="mono">Repositório</span><span class="seta" aria-hidden="true">→</span></div></div>
+        </a>
+        <a class="cartao-projeto" href="projeto.html">
+          <svg viewBox="0 0 382 200" aria-hidden="true"><rect width="382" height="200" fill="#E0321F"/><rect x="60" y="50" width="262" height="100" fill="#F3F2EC"/><rect x="84" y="78" width="140" height="12" fill="#121316"/><rect x="84" y="104" width="200" height="12" fill="#9A9CA3"/></svg>
+          <div class="cartao-projeto__corpo"><div class="cartao-projeto__meta mono"><span>DSM · 2º sem</span><span>4 integrantes</span></div><h3 class="display">Guia do Calouro</h3><p>Tudo que ninguém explica na primeira semana: horários, laboratórios, biblioteca e onde almoçar perto.</p><div class="cartao-projeto__pe"><span class="mono">Demo</span><span class="seta" aria-hidden="true">→</span></div></div>
+        </a>
+      </div>
+    </div>
+
+    <div class="turma" data-curso="gtur">
+      <h3 class="turma__titulo"><span class="display">GTUR — 3º semestre</span><span class="mono">INF018 · Projeto Integrador III · Tecnologia da Informação e Comunicação</span><span class="n">1 projeto</span></h3>
+      <div class="cartoes">
+        <a class="cartao-projeto" href="projeto.html">
+          <svg viewBox="0 0 382 200" aria-hidden="true"><rect width="382" height="200" fill="#1C2B47"/><ellipse cx="191" cy="100" rx="150" ry="60" fill="none" stroke="#F3F2EC" stroke-width="3" opacity=".6"/><ellipse cx="191" cy="100" rx="90" ry="60" fill="none" stroke="#F3F2EC" stroke-width="3" opacity=".35"/><rect x="177" y="86" width="28" height="28" fill="#E0321F"/></svg>
+          <div class="cartao-projeto__corpo"><div class="cartao-projeto__meta mono"><span>GTUR · 3º sem</span><span>6 integrantes</span></div><h3 class="display">Olímpia em 360°</h3><p>Tour virtual dos pontos turísticos da cidade com áudio em três idiomas, para hotéis e agências.</p><div class="cartao-projeto__pe"><span class="mono">Demo · vídeo</span><span class="seta" aria-hidden="true">→</span></div></div>
+        </a>
+      </div>
+    </div>
+
+    <div class="turma" data-curso="gtur">
+      <h3 class="turma__titulo"><span class="display">GTUR — 2º semestre</span><span class="mono">SGT015 · Projeto Integrador II · Planejamento e Organização de Eventos</span><span class="n">2 projetos</span></h3>
+      <div class="cartoes">
+        <a class="cartao-projeto" href="projeto.html">
+          <svg viewBox="0 0 382 200" aria-hidden="true"><rect width="382" height="200" fill="#ECECE8"/><path d="M0 130 Q60 100 120 130 T240 130 T382 130 V200 H0Z" fill="#121316"/><path d="M0 150 Q60 120 120 150 T240 150 T382 150 V200 H0Z" fill="#E0321F"/></svg>
+          <div class="cartao-projeto__corpo"><div class="cartao-projeto__meta mono"><span>GTUR · 2º sem</span><span>7 integrantes</span></div><h3 class="display">Festival das Águas</h3><p>Plano completo de um festival gastronômico e cultural para o aniversário de Olímpia, com orçamento e patrocínio.</p><div class="cartao-projeto__pe"><span class="mono">Vídeo</span><span class="seta" aria-hidden="true">→</span></div></div>
+        </a>
+        <a class="cartao-projeto" href="projeto.html">
+          <svg viewBox="0 0 382 200" aria-hidden="true"><rect width="382" height="200" fill="#121316"/><circle cx="130" cy="120" r="40" fill="none" stroke="#F3F2EC" stroke-width="6"/><circle cx="250" cy="120" r="40" fill="none" stroke="#F3F2EC" stroke-width="6"/><path d="M130 120 L190 60 L250 120 M190 60 L210 60" fill="none" stroke="#E0321F" stroke-width="6"/></svg>
+          <div class="cartao-projeto__corpo"><div class="cartao-projeto__meta mono"><span>GTUR · 2º sem</span><span>5 integrantes</span></div><h3 class="display">Roteiro Pedal</h3><p>Passeio ciclístico guiado pelos parques e pela zona rural de Olímpia, com paradas em produtores locais.</p><div class="cartao-projeto__pe"><span class="mono">—</span><span class="seta" aria-hidden="true">→</span></div></div>
+        </a>
+      </div>
+    </div>
+
+    <div class="turma" data-curso="etec">
+      <h3 class="turma__titulo"><span class="display">Etec ADM — 2º ano</span><span class="mono">Projeto do curso técnico</span><span class="n">1 projeto</span></h3>
+      <div class="cartoes">
+        <a class="cartao-projeto" href="projeto.html">
+          <svg viewBox="0 0 382 200" aria-hidden="true"><rect width="382" height="200" fill="#DADAD5"/><path d="M191 40 L270 180 L112 180 Z" fill="#121316"/><rect x="177" y="116" width="28" height="28" fill="#E0321F"/></svg>
+          <div class="cartao-projeto__corpo"><div class="cartao-projeto__meta mono"><span>Etec ADM · 2º ano</span><span>8 integrantes</span></div><h3 class="display">Recicla Etec</h3><p>Coleta seletiva na escola com pesagem semanal por turma e o resultado em um painel no pátio.</p><div class="cartao-projeto__pe"><span class="mono">—</span><span class="seta" aria-hidden="true">→</span></div></div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="sobre" id="projeto">
+  <div class="container">
+    <div class="sobre__cabeca">
+      <div><p class="mono">03 — Quem faz</p><h2 class="display">Na Fatec Olímpia, em casa de ferreiro o espeto é de ferro<span>.</span> <span class="destaque">O Vitrine CPS é feito pelos alunos.</span></h2></div>
+      <div class="sobre__texto">
+        <p>Esta edição conta com um sistema de publicação e avaliação dos projetos de forma digital e segura. A plataforma foi desenvolvida em conjunto por alunos do <strong>1º, 2º e 3º semestre de Desenvolvimento de Software Multiplataforma</strong> da Fatec Olímpia, aplicando o aprendizado adquirido em sala, com mentoria de professores. Ela dá a cada projeto uma página pública para divulgar, organiza o evento e registra a avaliação; a coordenação modera o conteúdo.</p>
+        <p>É software livre: o código fica público no GitHub, e a cada semestre uma nova turma pode melhorá-lo. A ideia é que, com o tempo, vire o portal permanente dos projetos da comunidade Fatec e Etec Olímpia.</p>
+      </div>
+    </div>
+    <div class="tecnica">
+      <div class="tecnica__cel"><span class="mono">Publicação</span><h3 class="display">Página por projeto</h3><p>Cada grupo entra com o RA, recebe um link de edição e monta a própria página: capa, resumo, galeria, equipe e links. Nada vai ao ar sem a aprovação da coordenação do curso.</p></div>
+      <div class="tecnica__cel"><span class="mono">Divulgação</span><h3 class="display">Link que vira convite</h3><p>Cada projeto tem um endereço permanente, com prévia pronta para o WhatsApp. O grupo compartilha, a família compartilha, a cidade fica sabendo. O link continua valendo nas edições seguintes.</p></div>
+      <div class="tecnica__cel"><span class="mono">Evento</span><h3 class="display">Votação pelo celular</h3><p>QR code assinado nas recepções, credencial única por visitante, notas pelo próprio aparelho e voto separado dos dados pessoais. Tudo roda no navegador.</p></div>
+      <div class="tecnica__cel"><span class="mono">Comunidade</span><h3 class="display">Software livre</h3><p>Código público no GitHub, feito em equipe por alunos de DSM com revisão humana de cada mudança. A próxima turma pode continuar de onde esta parou.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="grupo">
+  <div class="container grupo__grade">
+    <div>
+      <p class="mono">Área do grupo</p>
+      <h2 class="display">É representante de um grupo<span>?</span></h2>
+      <p>Entre com o RA para receber o link de edição do seu projeto. O link aparece uma única vez: guarde-o. A coordenação do curso aprova a página antes de ela ficar pública.</p>
+    </div>
+    <a class="botao botao--vazado" href="#" title="Na produção: /grupo/">Acessar a área do grupo</a>
+  </div>
+</section>
+
+<footer class="rodape">
+  <div class="container">
+    <div class="rodape__grade">
+      <div class="rodape__col"><p class="mono">Vitrine CPS</p><p>Plataforma da Mostra de Projetos da Fatec Olímpia e da Etec Olímpia, unidades do Centro Paula Souza. Desenvolvida e mantida pela comunidade da Fatec Olímpia.</p></div>
+      <div class="rodape__col"><p class="mono">Nesta edição</p><ul><li><a href="#mostra">A Mostra</a></li><li><a href="#projetos">Projetos</a></li><li><a href="#projeto">Quem faz</a></li><li><a href="#" title="Na produção: /grupo/">Área do grupo</a></li><li><a href="#" title="Na produção: /como-votar/">Como votar</a></li></ul></div>
+      <div class="rodape__col"><p class="mono">Instituição</p><ul><li><a href="https://www.fatecolimpia.edu.br/" target="_blank" rel="noopener noreferrer">Fatec Olímpia</a></li><li><a href="https://www.cps.sp.gov.br/" target="_blank" rel="noopener noreferrer">Centro Paula Souza</a></li></ul></div>
+    </div>
+    <div class="rodape__fim mono"><span>Centro Paula Souza · Fatec Olímpia · Etec Olímpia</span><span>Edição 2026/2 · 29.10</span></div>
+  </div>
+</footer>
+
+<div class="proto" aria-label="Controles do protótipo">
+  <span class="proto__tag">PROTÓTIPO</span>
+  <label>tema <select id="tema"><option value="light" selected>claro (padrão)</option><option value="dark">escuro</option></select></label>
+  <span>Projetos e capas são exemplos; os links apontam para as rotas reais.</span>
+</div>
+
+<script>
+(function () {
+  var chips = document.querySelectorAll('.filtros .chip');
+  var turmas = document.querySelectorAll('.turma');
+  chips.forEach(function (c) {
+    c.addEventListener('click', function () {
+      chips.forEach(function (o) { o.classList.toggle('chip--ativo', o === c); });
+      var curso = c.getAttribute('data-curso');
+      turmas.forEach(function (t) { t.hidden = curso !== 'todos' && t.getAttribute('data-curso') !== curso; });
+    });
+  });
+  var tema = document.getElementById('tema');
+  function aplicaTema() { document.documentElement.classList.toggle('proto-escuro', tema.value === 'dark'); }
+  tema.addEventListener('change', aplicaTema);
+  aplicaTema();
+})();
+</script>
+
+</body>
+</html>
