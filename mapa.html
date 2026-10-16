@@ -178,6 +178,7 @@ a { color: inherit; }
    como células. DSM em tinta, GTUR em vermelho, livre tracejado.
    No celular a planta desliza para os lados e centraliza no estande escolhido.
    ============================================================ */
+.nav a[aria-current="page"] { box-shadow: inset 0 -3px 0 var(--vermelho); }
 .mapa-hero { border-bottom: 1px solid var(--linha); }
 .mapa-hero .container { display: grid; gap: 16px; padding-block: calc(var(--u) * 5) calc(var(--u) * 4); }
 @media (min-width: 900px) { .mapa-hero .container { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); align-items: end; } }
@@ -284,7 +285,8 @@ a { color: inherit; }
     <nav class="nav" id="menu" aria-label="Principal">
       <a href="index.html#mostra" class="so-desktop"><span class="idx" aria-hidden="true">01</span>A Mostra</a>
       <a href="index.html#projetos"><span class="idx" aria-hidden="true">02</span>Projetos</a>
-      <a href="mapa.html" aria-current="page"><span class="idx" aria-hidden="true">03</span>Mapa</a>
+      <a href="index.html#projeto" class="so-desktop"><span class="idx" aria-hidden="true">03</span>Quem faz</a>
+      <a href="mapa.html" aria-current="page"><span class="idx" aria-hidden="true">04</span>Mapa</a>
       <a href="#" title="Na produção: /grupo/" class="nav--botao">Área do grupo</a>
     </nav>
   </div>
