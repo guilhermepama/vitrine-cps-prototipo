@@ -1,0 +1,568 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Vitrine CPS — mapa (protótipo)</title>
+</head>
+<body>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+
+/* ============================================================
+   VITRINE CPS — página inicial, linha "brutalismo elegante"
+   Estrutura exposta: a grade e as linhas organizam a informação.
+   Tipo condensado pesado em caixa alta; papel, tinta e um vermelho.
+   Sem cantos arredondados, sem sombra, sem gradiente.
+   Nenhum caminho para o voto (G8).
+   ============================================================ */
+:root {
+  /* paleta tirada do campus: bloco de concreto, azul estrutural, placa vermelha */
+  --papel: #ECE7DA;          /* bloco, clareado para leitura */
+  --papel-2: #F5F2EA;        /* célula */
+  --tinta: #121316;
+  --tinta-2: #4F5159;
+  --linha: #121316;          /* linhas estruturais em tinta; o azul fica nos acentos */
+  --linha-fraca: #C9C2AE;    /* junta dos blocos */
+  --azul: #b20000;             /* acento = vermelho (token mantido pelo nome para não quebrar regras) */
+  --azul-texto: #FFFFFF;
+  --vermelho: #b20000;       /* vermelho da marca: acento e ação */
+  --vermelho-texto: #FFFFFF;
+  --sobre-tinta: #F3F2EC;
+  --sobre-tinta-2: #9A9CA3;
+
+  --fonte-display: "Archivo", "Archivo Narrow", "Arial Narrow", sans-serif;
+  --fonte: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", monospace;
+
+  --t-12: 0.75rem; --t-13: 0.8125rem; --t-14: 0.875rem; --t-16: 1rem; --t-18: 1.125rem; --t-22: 1.375rem;
+  --t-hero: clamp(2.5rem, 1rem + 5vw, 5rem);
+  --t-h2: clamp(2rem, 1rem + 4vw, 4rem);
+  --t-card: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+
+  --mescla-foto: multiply;   /* claro: a foto ganha o tom do bloco */
+  --opacidade-foto: .92;
+
+  --u: 8px;
+  --gutter: 16px;
+  --alvo: 44px;
+}
+@media (min-width: 720px) { :root { --gutter: 32px; } }
+
+* { box-sizing: border-box; }
+body { margin: 0; font-family: var(--fonte); font-size: var(--t-16); line-height: 1.5; color: var(--tinta); background: var(--papel); overflow-wrap: break-word; -webkit-font-smoothing: antialiased; }
+img, svg { max-width: 100%; display: block; }
+h1, h2, h3, p, ul, ol, figure { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--vermelho); outline-offset: -3px; }
+
+.display { font-family: var(--fonte-display); font-variation-settings: "wdth" 62, "wght" 800; font-weight: 800; text-transform: uppercase; letter-spacing: -0.01em; line-height: 0.9; color: var(--tinta); }
+.mono { font-family: var(--mono); font-size: var(--t-12); letter-spacing: 0.04em; text-transform: uppercase; color: var(--tinta-2); }
+
+.faixa-w { border-bottom: 1px solid var(--linha); }
+.container { max-width: 1280px; margin: 0 auto; padding-inline: var(--gutter); }
+
+
+/* grades de uma coluna no celular: minmax(0,1fr) para o conteúdo (títulos largos) nunca alargar a coluna além da tela */
+.hero__grade, .proj__grade, .sobre-proj, .sobre__cabeca, .secao__cabeca, .voto__cabeca, .grupo__grade, .convite__grade,
+.ficha, .ficha-tec, .galeria, .equipe, .impacto, .tecnica, .passos, .rodape__grade, .cartoes { grid-template-columns: minmax(0, 1fr); }
+.hero__grade > *, .proj__grade > *, .sobre-proj > *, .secao__cabeca > *, .voto__cabeca > *, .grupo__grade > *, .convite__grade > * { min-width: 0; }
+.hero h1, .proj h1, .display { overflow-wrap: anywhere; }
+.hero h1, .proj h1 { overflow-wrap: normal; max-width: 100%; }
+
+/* ---------- TOPO ---------- */
+.topo { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 4; background: var(--papel); border-bottom: 1px solid var(--linha); }
+.topo__linha { display: flex; align-items: stretch; justify-content: space-between; min-height: 56px; }
+.marca { position: relative; display: flex; align-items: center; gap: 12px; text-decoration: none; padding-inline: var(--gutter); margin-left: calc(-1 * var(--gutter)); background: var(--vermelho); color: #FFFFFF; }
+.marca::before { content: ""; position: absolute; top: 0; bottom: 0; right: 100%; width: 50vw; background: var(--vermelho); } /* o vermelho segue até a borda da tela */
+.topo { overflow: hidden; }
+.marca__logo { height: 34px; width: auto; display: block; color: #FFFFFF; }
+.nav { display: flex; align-items: stretch; }
+.nav a { display: inline-flex; align-items: center; gap: 10px; padding: 0 16px; text-decoration: none; font-family: var(--mono); font-size: var(--t-13); text-transform: uppercase; letter-spacing: 0.04em; border-left: 1px solid var(--linha-fraca); }
+.nav a:first-child { border-left: 0; }
+.nav a:hover { background: var(--azul); color: var(--azul-texto); }
+.nav .idx { color: var(--azul); }
+.nav a.nav--botao { background: var(--vermelho); color: #FFFFFF; border-left: 0; margin-left: 8px; }
+.nav a.nav--botao:hover { background: var(--tinta); color: var(--papel); }
+.nav .so-desktop { display: none; }
+@media (min-width: 720px) { .nav .so-desktop { display: inline-flex; } .nav a { padding: 0 24px; } }
+
+
+/* ---------- MENU NO CELULAR: hambúrguer ---------- */
+.nav-toggle { display: none; align-items: center; justify-content: center; width: 56px; margin-right: calc(-1 * var(--gutter)); background: transparent; border: 0; border-left: 1px solid var(--linha); cursor: pointer; color: var(--tinta); }
+.nav-toggle span { display: block; width: 22px; height: 2px; background: currentColor; position: relative; }
+.nav-toggle span::before, .nav-toggle span::after { content: ""; position: absolute; left: 0; width: 22px; height: 2px; background: currentColor; }
+.nav-toggle span::before { top: -7px; } .nav-toggle span::after { top: 7px; }
+.nav-toggle[aria-expanded="true"] span { background: transparent; }
+.nav-toggle[aria-expanded="true"] span::before { top: 0; transform: rotate(45deg); }
+.nav-toggle[aria-expanded="true"] span::after { top: 0; transform: rotate(-45deg); }
+@media (max-width: 899px) {
+  .topo { overflow: visible; }
+  .nav-toggle { display: flex; }
+  .nav { display: none; position: absolute; left: 0; right: 0; top: 100%; flex-direction: column; background: var(--papel); border-bottom: 1px solid var(--linha); z-index: 5; }
+  .nav.aberto { display: flex; }
+  .nav a, .nav a.so-desktop { display: flex; min-height: 52px; padding: 0 var(--gutter); border-left: 0; border-top: 1px solid var(--linha-fraca); font-size: var(--t-14); }
+  .nav a.nav--botao { margin-left: 0; border-top: 1px solid var(--linha); }
+  .topo__linha { position: relative; }
+}
+
+/* ---------- SEÇÕES ---------- */
+.secao__cabeca { display: grid; gap: 12px; padding-block: calc(var(--u) * 5) calc(var(--u) * 4); border-bottom: 1px solid var(--linha); }
+@media (min-width: 900px) { .secao__cabeca { grid-template-columns: 1fr auto; align-items: end; } }
+.secao__cabeca h2 { font-size: var(--t-h2); }
+.secao__cabeca .mono { margin-bottom: 12px; }
+.secao__cabeca p { color: var(--tinta-2); max-width: 36em; margin-top: 8px; }
+.filtros { display: flex; flex-wrap: wrap; gap: 0; border: 1px solid var(--linha); width: max-content; max-width: 100%; }
+.chip { min-height: 40px; padding: 0 16px; background: transparent; color: var(--tinta); border: 0; border-right: 1px solid var(--linha); cursor: pointer; font-family: var(--mono); font-size: var(--t-13); text-transform: uppercase; letter-spacing: 0.04em; }
+.chip:last-child { border-right: 0; }
+.chip--ativo { background: var(--azul); color: var(--azul-texto); }
+
+/* turma: linha-título + grade de células */
+.turma[hidden] { display: none; }
+.turma__titulo { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 20px; padding-block: 14px; border-bottom: 1px solid var(--linha); }
+@media (max-width: 719px) { .turma__titulo { flex-direction: column; align-items: flex-start; gap: 4px; } .turma__titulo .mono { flex: none; } }
+.turma__titulo .display { font-size: var(--t-22); }
+.turma__titulo .mono { flex: 1; }
+.turma__titulo .n { font-family: var(--mono); font-size: var(--t-12); color: var(--tinta-2); }
+
+.cartoes { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); border-bottom: 1px solid var(--linha); }
+.cartao-projeto { display: flex; flex-direction: column; text-decoration: none; color: inherit; background: var(--papel-2); border-right: 1px solid var(--linha-fraca); border-bottom: 1px solid var(--linha-fraca); margin-bottom: -1px; min-width: 0; transition: background-color .12s ease; }
+.cartao-projeto:hover { background: var(--azul); color: var(--azul-texto); }
+.cartao-projeto:hover .display, .cartao-projeto:hover .mono { color: inherit; }
+.cartao-projeto:hover .seta { background: var(--vermelho); color: var(--vermelho-texto); }
+.cartao-projeto svg, .cartao-projeto img { width: 100%; aspect-ratio: 1.91 / 1; object-fit: cover; border-bottom: 1px solid var(--linha-fraca); }
+.cartao-projeto__corpo { padding: 16px var(--gutter) 20px; display: grid; gap: 10px; flex: 1; }
+.cartao-projeto__meta { display: flex; justify-content: space-between; gap: 12px; }
+.cartao-projeto h3 { font-size: var(--t-card); }
+.cartao-projeto p { font-size: var(--t-14); line-height: 1.45; color: var(--tinta-2); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.cartao-projeto:hover p { color: var(--sobre-tinta-2); }
+.cartao-projeto__pe { display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 8px; }
+.seta { width: 32px; height: 32px; display: grid; place-items: center; border: 1px solid currentColor; font-family: var(--mono); font-size: 14px; }
+
+/* ---------- BOTÕES ---------- */
+.botao { display: inline-flex; align-items: center; justify-content: center; gap: 12px; min-height: var(--alvo); padding: 0 20px; border: 1px solid var(--tinta); background: var(--tinta); color: var(--sobre-tinta); text-decoration: none; cursor: pointer; font-family: var(--mono); font-size: var(--t-13); text-transform: uppercase; letter-spacing: .04em; }
+.botao:hover { background: var(--azul); border-color: var(--azul); color: var(--azul-texto); }
+.botao--vazado { background: transparent; color: var(--tinta); }
+.botao--vermelho { background: var(--vermelho); border-color: var(--vermelho); color: var(--vermelho-texto); }
+.botao--vermelho:hover { background: var(--sobre-tinta); border-color: var(--sobre-tinta); color: var(--tinta); }
+.grupo .botao--vazado { color: var(--azul-texto); border-color: var(--azul-texto); }
+.grupo .botao--vazado:hover { background: var(--azul-texto); color: var(--azul); }
+
+/* ---------- RODAPÉ ---------- */
+.rodape { font-size: var(--t-14); }
+.rodape__grade { display: grid; }
+@media (min-width: 720px) { .rodape__grade { grid-template-columns: 2fr 1fr 1fr; } }
+.rodape__col { padding: 24px var(--gutter) 24px 0; border-bottom: 1px solid var(--linha-fraca); }
+@media (min-width: 720px) { .rodape__col { border-bottom: 0; border-right: 1px solid var(--linha-fraca); padding-left: var(--gutter); } .rodape__col:first-child { padding-left: 0; } .rodape__col:last-child { border-right: 0; } }
+.rodape .mono { margin-bottom: 12px; }
+.rodape p { color: var(--tinta-2); max-width: 40em; }
+.rodape li + li { margin-top: 6px; }
+.rodape a { text-decoration: none; }
+.rodape a:hover { color: var(--azul); }
+.rodape__fim { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; padding-block: 14px; border-top: 1px solid var(--linha); }
+
+.proto { position: sticky; bottom: 0; z-index: 5; display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding: 8px var(--gutter); padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px)); background: var(--papel-2); border-top: 1px dashed var(--linha); font-family: var(--mono); font-size: var(--t-12); color: var(--tinta-2); }
+.proto label { display: inline-flex; align-items: center; gap: 6px; color: var(--tinta); }
+.proto__tag { color: var(--vermelho); }
+@media (max-width: 899px) { @media (max-width: 719px) { .proto { display: none; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+</style>
+<style>
+/* ============================================================
+   MAPA DA MOSTRA — /mapa/ (proposta para a reunião de 16/10)
+   Planta como prancha: paredes em tinta, corredor em papel, estandes
+   como células. DSM em tinta, GTUR em vermelho, livre tracejado.
+   No celular a planta desliza para os lados e centraliza no estande escolhido.
+   ============================================================ */
+.mapa-hero { border-bottom: 1px solid var(--linha); }
+.mapa-hero .container { display: grid; gap: 16px; padding-block: calc(var(--u) * 5) calc(var(--u) * 4); }
+@media (min-width: 900px) { .mapa-hero .container { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); align-items: end; } }
+.mapa-hero h1 { font-size: var(--t-h2); }
+.mapa-hero p:not(.mono) { color: var(--tinta-2); max-width: 34em; }
+.mapa-hero .mono { margin-bottom: 12px; }
+
+/* barra de busca e filtro */
+.mapa-ferramentas { display: flex; flex-wrap: wrap; gap: 12px; align-items: stretch; padding-block: 16px; border-bottom: 1px solid var(--linha); }
+.busca { flex: 1 1 240px; display: flex; min-width: 0; border: 1px solid var(--linha); background: var(--papel-2); }
+.busca label { display: flex; align-items: center; padding: 0 12px; border-right: 1px solid var(--linha); font-family: var(--mono); font-size: var(--t-12); text-transform: uppercase; letter-spacing: .04em; color: var(--tinta-2); white-space: nowrap; }
+.busca input { flex: 1; min-width: 0; min-height: 44px; padding: 0 12px; border: 0; background: transparent; font: 500 var(--t-16)/1 var(--fonte); color: var(--tinta); }
+.busca input:focus-visible { outline: 3px solid var(--vermelho); outline-offset: -3px; }
+.filtros .chip[aria-pressed="true"] { background: var(--azul); color: var(--azul-texto); }
+
+/* planta */
+.planta { position: relative; border-bottom: 1px solid var(--linha); padding-block: 20px; overflow-x: auto; -webkit-overflow-scrolling: touch; scroll-behavior: smooth; }
+.planta svg { display: block; width: 100%; height: auto; overflow: visible; font-family: var(--mono); }
+.planta__dica { display: none; margin-top: 8px; font-family: var(--mono); font-size: var(--t-12); text-transform: uppercase; letter-spacing: .04em; color: var(--tinta-2); }
+@media (max-width: 899px) { .planta svg { width: 1100px; max-width: none; } .planta__dica { display: block; } }
+@media (prefers-reduced-motion: reduce) { .planta { scroll-behavior: auto; } }
+.planta .grade { stroke: var(--tinta); stroke-width: .5; opacity: .1; }
+.planta .predio { fill: var(--papel); stroke: var(--tinta); stroke-width: 2; }
+.planta .corredor { fill: var(--papel-2); }
+.planta .sala { fill: var(--papel); stroke: var(--tinta); stroke-width: 1; }
+.planta .sala--estandes { fill: var(--papel-2); }
+.planta .rotulo-sala { fill: var(--tinta-2); font-size: 11px; letter-spacing: .04em; text-transform: uppercase; }
+.planta .rotulo-sala--pe { font-size: 9px; }
+.planta .entrada { fill: var(--vermelho); font-size: 13px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; }
+.planta .seta-entrada { stroke: var(--vermelho); stroke-width: 2; fill: none; }
+
+.estande { cursor: pointer; }
+.estande .caixa { stroke: var(--tinta); stroke-width: 1; transition: opacity .15s ease; }
+.estande text { font-size: 11px; font-weight: 500; letter-spacing: .02em; pointer-events: none; }
+.estande--dsm .caixa { fill: var(--tinta); }
+.estande--dsm text { fill: var(--papel); }
+.estande--gtur .caixa { fill: var(--vermelho); stroke: var(--vermelho); }
+.estande--gtur text { fill: #FFFFFF; }
+.estande--livre .caixa { fill: var(--papel); stroke-dasharray: 3 3; stroke: var(--tinta-2); }
+.estande--livre text { fill: var(--tinta-2); }
+.estande.apagado .caixa, .estande.apagado text { opacity: .18; }
+.estande:focus { outline: none; }
+.estande:focus-visible .caixa, .estande.ativo .caixa { fill: #FFFFFF; stroke: var(--vermelho); stroke-width: 3; stroke-dasharray: none; }
+.estande:focus-visible text, .estande.ativo text { fill: var(--vermelho); opacity: 1; }
+.estande.ativo .caixa { opacity: 1; }
+.alvo { fill: none; stroke: var(--vermelho); stroke-width: 1.5; opacity: 0; pointer-events: none; }
+.alvo.mostra { opacity: 1; }
+@media (prefers-reduced-motion: no-preference) { .alvo.mostra { animation: pulso 1.6s ease-out infinite; transform-box: fill-box; transform-origin: center; } }
+@keyframes pulso { from { transform: scale(1); opacity: .9; } to { transform: scale(1.9); opacity: 0; } }
+
+.voce { pointer-events: none; }
+.voce rect { fill: var(--tinta); }
+.voce text { fill: var(--papel); font-size: 10px; letter-spacing: .04em; }
+.voce .marca-aqui { fill: var(--vermelho); }
+
+.legenda { display: flex; flex-wrap: wrap; gap: 8px 24px; padding-block: 12px; font-family: var(--mono); font-size: var(--t-12); text-transform: uppercase; letter-spacing: .04em; color: var(--tinta-2); border-bottom: 1px solid var(--linha); }
+.legenda span { display: inline-flex; align-items: center; gap: 8px; }
+.legenda i { display: inline-block; width: 18px; height: 12px; border: 1px solid var(--tinta); }
+.legenda .l-dsm { background: var(--tinta); }
+.legenda .l-gtur { background: var(--vermelho); border-color: var(--vermelho); }
+.legenda .l-livre { background: var(--papel); border-style: dashed; }
+.legenda .l-aqui { background: var(--vermelho); border-radius: 50%; width: 12px; }
+
+/* ficha do estande selecionado */
+.ficha-estande { display: grid; gap: 0; border-bottom: 1px solid var(--linha); }
+@media (min-width: 720px) { .ficha-estande { grid-template-columns: auto minmax(0, 1fr) auto; align-items: stretch; } }
+.ficha-estande__codigo { display: flex; align-items: center; padding: 16px var(--gutter) 16px 0; font-family: var(--fonte-display); font-variation-settings: "wdth" 62, "wght" 800; font-weight: 800; font-size: clamp(2.5rem, 1rem + 4vw, 4rem); line-height: .9; color: var(--vermelho); text-transform: uppercase; }
+@media (min-width: 720px) { .ficha-estande__codigo { border-right: 1px solid var(--linha); padding-right: calc(var(--gutter) * 1.5); } }
+.ficha-estande__corpo { display: grid; gap: 6px; align-content: center; padding: 16px 0; min-width: 0; }
+@media (min-width: 720px) { .ficha-estande__corpo { padding-inline: var(--gutter); } }
+.ficha-estande__corpo h2 { font-family: var(--fonte-display); font-variation-settings: "wdth" 62, "wght" 800; font-weight: 800; font-size: var(--t-card); text-transform: uppercase; line-height: .95; }
+.ficha-estande__corpo p { color: var(--tinta-2); font-size: var(--t-14); max-width: 46em; }
+.ficha-estande__acao { display: flex; align-items: center; padding: 0 0 16px; }
+@media (min-width: 720px) { .ficha-estande__acao { padding: 16px 0 16px var(--gutter); border-left: 1px solid var(--linha-fraca); } }
+
+/* lista estande → projeto */
+.lista-area { border-bottom: 1px solid var(--linha); }
+.lista-area h3 { display: flex; justify-content: space-between; gap: 12px; padding-block: 14px; border-bottom: 1px solid var(--linha); font-family: var(--fonte-display); font-variation-settings: "wdth" 62, "wght" 800; font-weight: 800; font-size: var(--t-22); text-transform: uppercase; }
+.lista-area h3 span { font-family: var(--mono); font-weight: 400; font-variation-settings: normal; font-size: var(--t-12); letter-spacing: .04em; color: var(--tinta-2); align-self: center; }
+.lista { display: grid; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 720px) { .lista { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1100px) { .lista { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.item { display: flex; align-items: center; gap: 14px; min-width: 0; padding: 12px var(--gutter) 12px 0; margin-bottom: -1px; border-bottom: 1px solid var(--linha-fraca); background: transparent; border-left: 0; border-right: 0; border-top: 0; text-align: left; font: inherit; color: inherit; cursor: pointer; }
+.item:hover { background: var(--papel-2); }
+.item[hidden] { display: none; }
+.item__cod { flex: none; width: 64px; padding: 6px 0; text-align: center; font-family: var(--mono); font-size: var(--t-13); font-weight: 500; }
+.item--dsm .item__cod { background: var(--tinta); color: var(--papel); }
+.item--gtur .item__cod { background: var(--vermelho); color: #FFFFFF; }
+.item--livre .item__cod { border: 1px dashed var(--tinta-2); color: var(--tinta-2); }
+.item__txt { display: grid; min-width: 0; }
+.item__txt strong { font-weight: 600; line-height: 1.25; }
+.item__txt small { font-size: var(--t-13); color: var(--tinta-2); }
+.item.ativo .item__cod { outline: 3px solid var(--vermelho); outline-offset: 2px; }
+.nada { padding-block: 16px; color: var(--tinta-2); }
+
+.aviso-proto { padding-block: 14px; font-family: var(--mono); font-size: var(--t-12); text-transform: uppercase; letter-spacing: .04em; color: var(--tinta-2); }
+.aviso-proto strong { color: var(--vermelho); font-weight: 500; }
+</style>
+
+<header class="topo">
+  <div class="container topo__linha">
+    <a class="marca" href="index.html" aria-label="Vitrine CPS, página inicial"><svg class="marca__logo" viewBox="0 0 419 87" role="img" aria-label="Vitrine CPS Olímpia" fill="currentColor"> <g transform="matrix(1,0,0,1,-505.380946,-180.364321)"> <g> <g transform="matrix(-1.978145,0,0,1.375,2151.967332,-362.548586)"> <g transform="matrix(1,0,0,1,-321,87)"> <path d="M942.044,343.93L942.044,335.633L990.173,307.846L994.438,310.002L990.374,312.349L990.374,315.871L942.044,343.93Z"/> </g> <g transform="matrix(1,0,0,1,-321,87)"> <path d="M942.044,347.724L1001.513,313.578L1005.778,315.735L990.374,324.629L990.374,328.158L942.044,356.443L942.044,347.724Z"/> </g> <g transform="matrix(1,0,0,1,-321,87)"> <path d="M942.044,361.6L1013.94,319.861L1018.206,322.017L990.374,338.626L990.374,342.056L942.044,370.182L942.044,361.6Z"/> </g> <g transform="matrix(1,0,0,1,-321,87)"> <path d="M947.658,371L1025.827,325.87L1030.092,328.026L990.374,350.957L990.374,354.462L962.175,371L947.658,371Z"/> </g> <g transform="matrix(1,0,0,1,-321,87)"> <path d="M967.812,371L1036.572,331.302L1040.837,333.458L990.374,362.593L990.374,366.304L982.812,371L967.812,371Z"/> </g> <g transform="matrix(1,0,0,1,-321,87)"> <path d="M990.374,371L1043.888,340.104L1043.888,344.722L998.374,371L990.374,371Z"/> </g> <g transform="matrix(1,0,0,1,-321,87)"> <path d="M1012.668,371L1043.888,352.975L1043.888,357.594L1020.668,371L1012.668,371Z"/> </g> <g transform="matrix(1,0,0,1,-321,87)"> <path d="M1032.822,371L1043.888,364.611L1043.888,369.23L1040.822,371L1032.822,371Z"/> </g> </g> <g transform="matrix(0.997155,0,0,0.997155,-53.942079,-7.505606)"> <path d="M570.201,231.948L560.919,197.28L567.008,197.28L574.498,226.816L574.937,226.816L582.428,197.28L588.517,197.28L579.234,231.948L570.201,231.948Z" style="fill-rule:nonzero;"/> <path d="M601.08,231.948L601.08,197.28L606.9,197.28L606.9,231.948L601.08,231.948ZM593.219,231.948L593.219,226.607L614.811,226.607L614.811,231.948L593.219,231.948ZM593.219,202.608L593.219,197.28L614.811,197.28L614.811,202.608L593.219,202.608Z" style="fill-rule:nonzero;"/> <path d="M630.401,231.948L630.401,197.28L636.222,197.28L636.222,231.948L630.401,231.948ZM620.367,202.695L620.367,197.28L646.256,197.28L646.256,202.695L620.367,202.695Z" style="fill-rule:nonzero;"/> <path d="M656.607,219.058L656.607,213.643L663.292,213.643C664.965,213.643 666.267,213.172 667.198,212.229C668.129,211.287 668.595,209.966 668.595,208.267C668.595,206.486 668.129,205.112 667.198,204.146C666.267,203.179 664.965,202.695 663.292,202.695L656.705,202.695L656.119,197.28L663.292,197.28C666.967,197.28 669.807,198.192 671.812,200.015C673.818,201.838 674.82,204.426 674.82,207.778C674.82,211.35 673.818,214.122 671.812,216.096C669.807,218.071 666.967,219.058 663.292,219.058L656.607,219.058ZM651.129,231.948L651.129,197.28L656.949,197.28L656.949,231.948L651.129,231.948ZM669.132,231.948L662.101,215.64L668.321,215.64L676.09,231.948L669.132,231.948Z" style="fill-rule:nonzero;"/> <path d="M688.971,231.948L688.971,197.28L694.791,197.28L694.791,231.948L688.971,231.948ZM681.109,231.948L681.109,226.607L702.701,226.607L702.701,231.948L681.109,231.948ZM681.109,202.608L681.109,197.28L702.701,197.28L702.701,202.608L681.109,202.608Z" style="fill-rule:nonzero;"/> <path d="M724.21,231.948L716.251,205.142L713.756,205.142L713.756,197.28L718.194,197.28L726.153,224.087L727.623,224.087L727.623,231.948L724.21,231.948ZM709.918,231.948L709.918,197.28L715.514,197.28L715.514,231.948L709.918,231.948ZM726.891,231.948L726.891,197.28L732.486,197.28L732.486,231.948L726.891,231.948Z" style="fill-rule:nonzero;"/> <path d="M739.508,231.948L739.508,197.28L745.328,197.28L745.328,231.948L739.508,231.948ZM739.508,231.948L739.508,226.533L762.955,226.533L762.955,231.948L739.508,231.948ZM739.508,217.305L739.508,211.875L758.561,211.875L758.561,217.305L739.508,217.305ZM739.508,202.695L739.508,197.28L762.955,197.28L762.955,202.695L739.508,202.695Z" style="fill-rule:nonzero;"/> </g> <g transform="matrix(0.997155,0,0,0.997155,63.874075,31.726141)"> <path d="M578.331,232.437C567.39,232.437 561.92,226.48 561.92,214.566C561.92,208.918 563.298,204.544 566.055,201.443C568.813,198.342 572.709,196.792 577.745,196.792C580.079,196.792 582.133,197.166 583.907,197.913C585.681,198.66 587.005,199.723 587.877,201.103L584.264,205.366C583.531,204.377 582.599,203.612 581.468,203.074C580.337,202.535 579.112,202.266 577.794,202.266C574.858,202.266 572.505,203.312 570.736,205.403C568.967,207.495 568.082,210.467 568.082,214.321C568.082,222.739 571.775,226.948 579.161,226.948C581.521,226.948 583.849,226.46 586.144,225.484L587.267,230.776C584.435,231.883 581.456,232.437 578.331,232.437Z" style="fill-rule:nonzero;"/> <path d="M598.258,221.69L598.258,216.275L603.478,216.275C605.825,216.275 607.621,215.658 608.866,214.424C610.111,213.19 610.733,211.433 610.733,209.151C610.733,207.061 610.111,205.462 608.866,204.356C607.621,203.249 605.825,202.695 603.478,202.695L598.356,202.695L598.356,197.28L603.478,197.28C607.823,197.28 611.157,198.281 613.477,200.281C615.798,202.281 616.959,205.155 616.959,208.901C616.959,213.016 615.798,216.176 613.477,218.381C611.157,220.587 607.823,221.69 603.478,221.69L598.258,221.69ZM593.023,231.948L593.023,197.28L598.844,197.28L598.844,231.948L593.023,231.948Z" style="fill-rule:nonzero;"/> <path d="M632.115,232.437C630.146,232.437 628.261,232.273 626.461,231.946C624.661,231.619 623.028,231.148 621.563,230.532L622.345,224.605C624.135,225.36 625.894,225.939 627.62,226.343C629.347,226.747 630.976,226.948 632.506,226.948C634.462,226.948 635.94,226.603 636.939,225.914C637.939,225.223 638.438,224.206 638.438,222.861C638.438,221.126 637.444,219.798 635.455,218.877L630.064,216.333C627.646,215.181 625.779,213.77 624.464,212.1C623.149,210.43 622.491,208.501 622.491,206.314C622.491,203.286 623.456,200.943 625.386,199.282C627.317,197.622 630.048,196.792 633.58,196.792C635.79,196.792 637.827,197.153 639.691,197.876C641.554,198.599 643.263,199.694 644.815,201.162L640.782,205.611C639.536,204.497 638.321,203.661 637.14,203.103C635.958,202.545 634.78,202.266 633.604,202.266C632.075,202.266 630.886,202.61 630.04,203.298C629.194,203.987 628.77,204.994 628.77,206.319C628.77,207.227 629.059,208.028 629.637,208.721C630.215,209.414 631.051,210.038 632.145,210.591L636.988,212.998C639.482,214.242 641.393,215.674 642.723,217.295C644.053,218.916 644.718,220.783 644.718,222.896C644.718,225.998 643.645,228.364 641.5,229.993C639.355,231.622 636.226,232.437 632.115,232.437Z" style="fill-rule:nonzero;"/> </g> <g transform="matrix(0.471763,0,0,0.498852,247.566954,142.31064)"> <path d="M592.052,199.771C593.533,201.398 594.668,203.392 595.458,205.752C596.247,208.112 596.642,210.79 596.642,213.784C596.642,216.779 596.239,219.461 595.433,221.829C594.627,224.197 593.5,226.17 592.052,227.749C590.554,229.393 588.784,230.63 586.742,231.46C584.699,232.29 582.367,232.705 579.747,232.705C577.192,232.705 574.868,232.282 572.777,231.436C570.685,230.589 568.907,229.36 567.442,227.749C565.978,226.138 564.85,224.16 564.061,221.817C563.272,219.473 562.877,216.795 562.877,213.784C562.877,210.822 563.268,208.165 564.049,205.813C564.83,203.461 565.969,201.447 567.467,199.771C568.899,198.176 570.677,196.955 572.801,196.109C574.925,195.262 577.241,194.839 579.747,194.839C582.351,194.839 584.691,195.266 586.766,196.121C588.841,196.975 590.603,198.192 592.052,199.771ZM591.612,213.784C591.612,209.064 590.554,205.422 588.438,202.859C586.323,200.296 583.434,199.014 579.771,199.014C576.077,199.014 573.176,200.296 571.068,202.859C568.96,205.422 567.906,209.064 567.906,213.784C567.906,218.553 568.98,222.203 571.129,224.734C573.277,227.265 576.158,228.53 579.771,228.53C583.385,228.53 586.262,227.265 588.402,224.734C590.542,222.203 591.612,218.553 591.612,213.784Z" style="fill-rule:nonzero;"/> <path d="M627.306,231.948L604.308,231.948L604.308,195.596L609.142,195.596L609.142,227.651L627.306,227.651L627.306,231.948Z" style="fill-rule:nonzero;"/> <path d="M644.957,231.948L630.602,231.948L630.602,228.237L635.362,228.237L635.362,199.307L630.602,199.307L630.602,195.596L644.957,195.596L644.957,199.307L640.196,199.307L640.196,228.237L644.957,228.237L644.957,231.948ZM644.957,181.924L638.292,191.055L634.654,191.055L639.024,181.924L644.957,181.924Z" style="fill-rule:nonzero;"/> <path d="M685.558,231.948L680.724,231.948L680.724,200.625L670.616,221.939L667.735,221.939L657.701,200.625L657.701,231.948L653.185,231.948L653.185,195.596L659.776,195.596L669.469,215.835L678.844,195.596L685.558,195.596L685.558,231.948Z" style="fill-rule:nonzero;"/> <path d="M719.103,206.582C719.103,208.193 718.822,209.687 718.26,211.062C717.699,212.437 716.913,213.63 715.904,214.639C714.651,215.892 713.17,216.832 711.461,217.459C709.752,218.085 707.595,218.399 704.991,218.399L700.157,218.399L700.157,231.948L695.323,231.948L695.323,195.596L705.187,195.596C707.367,195.596 709.215,195.779 710.729,196.145C712.242,196.511 713.585,197.085 714.757,197.866C716.14,198.794 717.21,199.95 717.967,201.333C718.724,202.717 719.103,204.466 719.103,206.582ZM714.073,206.704C714.073,205.451 713.854,204.36 713.414,203.433C712.975,202.505 712.307,201.748 711.412,201.162C710.631,200.658 709.74,200.296 708.739,200.076C707.738,199.856 706.472,199.746 704.942,199.746L700.157,199.746L700.157,214.273L704.234,214.273C706.187,214.273 707.774,214.098 708.995,213.748C710.216,213.398 711.209,212.84 711.974,212.075C712.739,211.294 713.28,210.472 713.597,209.609C713.915,208.747 714.073,207.778 714.073,206.704Z" style="fill-rule:nonzero;"/> <path d="M738.292,231.948L723.937,231.948L723.937,228.237L728.697,228.237L728.697,199.307L723.937,199.307L723.937,195.596L738.292,195.596L738.292,199.307L733.531,199.307L733.531,228.237L738.292,228.237L738.292,231.948Z" style="fill-rule:nonzero;"/> <path d="M775.182,231.948L770.03,231.948L766.466,221.817L750.743,221.817L747.179,231.948L742.271,231.948L755.504,195.596L761.949,195.596L775.182,231.948ZM764.977,217.666L758.604,199.819L752.208,217.666L764.977,217.666Z" style="fill-rule:nonzero;"/> </g> </g> </g> </svg></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="menu" aria-label="Abrir menu"><span></span></button>
+    <nav class="nav" id="menu" aria-label="Principal">
+      <a href="index.html#mostra" class="so-desktop"><span class="idx" aria-hidden="true">01</span>A Mostra</a>
+      <a href="index.html#projetos"><span class="idx" aria-hidden="true">02</span>Projetos</a>
+      <a href="mapa.html" aria-current="page"><span class="idx" aria-hidden="true">03</span>Mapa</a>
+      <a href="#" title="Na produção: /grupo/" class="nav--botao">Área do grupo</a>
+    </nav>
+  </div>
+</header>
+
+<section class="mapa-hero">
+  <div class="container">
+    <div>
+      <p class="mono">Mapa da Mostra · Edição 2026/2 · 29.10</p>
+      <h1 class="display">Encontre cada projeto no campus<span class="ponto">.</span></h1>
+    </div>
+    <p>Toque num estande para ver o projeto. Busque pelo nome ou filtre pelo curso. O mesmo mapa fica na TV ao lado da entrada, junto do QR da votação.</p>
+  </div>
+</section>
+
+<div class="container">
+  <div class="mapa-ferramentas">
+    <div class="busca">
+      <label for="busca">Buscar</label>
+      <input id="busca" type="search" placeholder="Nome do projeto ou estande (ex.: C-07)" autocomplete="off">
+    </div>
+    <div class="filtros" role="group" aria-label="Filtrar por curso">
+      <button class="chip" type="button" data-curso="todos" aria-pressed="true">Todos</button>
+      <button class="chip" type="button" data-curso="dsm" aria-pressed="false">DSM</button>
+      <button class="chip" type="button" data-curso="gtur" aria-pressed="false">GTUR</button>
+    </div>
+  </div>
+
+  <div class="planta" id="planta-caixa">
+    <svg id="planta" role="img" aria-labelledby="planta-titulo"><title id="planta-titulo">Planta do térreo da Fatec Olímpia com os estandes da Mostra</title></svg>
+  </div>
+  <p class="planta__dica">Arraste a planta para os lados · a lista completa está logo abaixo</p>
+
+  <div class="legenda" aria-hidden="true">
+    <span><i class="l-dsm"></i>DSM</span>
+    <span><i class="l-gtur"></i>GTUR</span>
+    <span><i class="l-livre"></i>Livre</span>
+    <span><i class="l-aqui"></i>Você está aqui (TV da entrada)</span>
+  </div>
+
+  <div class="ficha-estande" id="ficha" aria-live="polite">
+    <div class="ficha-estande__codigo" id="ficha-codigo">—</div>
+    <div class="ficha-estande__corpo">
+      <span class="mono" id="ficha-onde">Nenhum estande selecionado</span>
+      <h2 id="ficha-titulo">Escolha um estande</h2>
+      <p id="ficha-resumo">Toque num estande da planta ou num item da lista abaixo.</p>
+    </div>
+    <div class="ficha-estande__acao"><a class="botao botao--vermelho" id="ficha-link" href="projeto.html" hidden>Ver o projeto</a></div>
+  </div>
+
+  <div id="listas"></div>
+
+  <p class="aviso-proto"><strong>Proposta para a reunião de 16/10:</strong> planta a partir do esboço; numeração, salas e alocação dos projetos são exemplos e serão definidas pela turma de GTUR.</p>
+</div>
+
+<footer class="rodape">
+  <div class="container">
+    <div class="rodape__grade">
+      <div class="rodape__col"><p class="mono">Vitrine CPS</p><p>Plataforma da Mostra de Projetos da Fatec Olímpia, unidade do Centro Paula Souza. Desenvolvida e mantida pela comunidade da Fatec Olímpia.</p></div>
+      <div class="rodape__col"><p class="mono">Nesta edição</p><ul><li><a href="index.html#mostra">A Mostra</a></li><li><a href="index.html#projetos">Projetos</a></li><li><a href="index.html#projeto">Quem faz</a></li><li><a href="mapa.html">Mapa</a></li><li><a href="#" title="Na produção: /grupo/">Área do grupo</a></li><li><a href="#" title="Na produção: /como-votar/">Como votar</a></li></ul></div>
+      <div class="rodape__col"><p class="mono">Instituição</p><ul><li><a href="https://fatecolimpia.cps.sp.gov.br/" target="_blank" rel="noopener noreferrer">Fatec Olímpia</a></li><li><a href="https://www.cps.sp.gov.br/" target="_blank" rel="noopener noreferrer">Centro Paula Souza</a></li></ul></div>
+    </div>
+    <div class="rodape__fim mono"><span>Centro Paula Souza · Fatec Olímpia</span><span>Edição 2026/2 · 29.10</span></div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  /* -------- dados (exemplo) --------
+     Coordenadas no sistema da planta (1400 × 300), do esboço de 16/10.
+     Em produção: cada projeto tem o campo "estande", preenchido no admin. */
+  var W = 1440, H = 310;
+  var salasCima = [
+    [65, 'Sala de aula'], [208, 'Sala de aula'], [330, 'Sala de aula'], [453, 'Sala de aula'],
+    [575, 'Sala 1', true], [697, 'Sala 2', true], [820, 'Sala 3', true]
+  ];
+  var salasBaixo = [
+    [65, 72, ''], [137, 71, ''], [208, 90, 'Biblioteca'], [298, 92, 'TI'], [390, 92, 'Secretaria'],
+    [575, 122, 'Sala de aula'], [697, 123, 'Sala de aula'], [820, 123, 'Sala de aula'], [943, 122, 'Sala de aula'],
+    [1183, 172, 'Sala dos professores'], [1355, 57, 'WC fem.']
+  ];
+  var extrasCima = [[943, 72, 'Coord.'], [1067, 48, 'Servidor'], [1258, 97, 'Cozinha'], [1355, 57, 'WC masc.']];
+
+  // Estandes do corredor: fileira de cima e de baixo, da esquerda para a direita.
+  var xs1 = [72, 140, 204, 268, 338, 402, 618, 688, 744, 822, 880, 966];
+  var xs2 = [72, 140, 204, 268, 338, 402, 616, 684, 748, 812, 878, 944];
+  var estandes = [];
+  xs1.forEach(function (x, i) { estandes.push({ cod: 'C-' + pad(i + 1), x: x, y: 136, area: 'Corredor' }); });
+  xs2.forEach(function (x, i) { estandes.push({ cod: 'C-' + pad(i + 13), x: x, y: 186, area: 'Corredor' }); });
+  [[586, 52], [646, 52], [586, 88], [707, 52], [768, 52], [707, 88], [830, 52], [893, 52], [830, 88]].forEach(function (p, i) {
+    var sala = Math.floor(i / 3) + 1;
+    estandes.push({ cod: 'S' + sala + '-' + pad(i % 3 + 1), x: p[0], y: p[1], area: 'Sala ' + sala });
+  });
+
+  var projetos = [
+    ['C-01', 'dsm', 'DSM · 1º sem', 'Agenda da Feira Livre', 'Horários e barracas da feira de domingo num site simples.'],
+    ['C-02', 'dsm', 'DSM · 1º sem', 'Achados da Fatec', 'Mural digital de objetos perdidos no campus.'],
+    ['C-03', 'dsm', 'DSM · 1º sem', 'Carona Fatec', 'Combina caronas entre alunos que moram no mesmo bairro.'],
+    ['C-04', 'dsm', 'DSM · 1º sem', 'Doa Olímpia', 'Mapa dos pontos de doação de roupas e alimentos da cidade.'],
+    ['C-05', 'dsm', 'DSM · 1º sem', 'Ônibus Agora', 'Horários das linhas urbanas organizados por ponto.'],
+    ['C-06', 'dsm', 'DSM · 1º sem', 'Pet Perdido', 'Cadastro de animais perdidos e encontrados, com foto.'],
+    ['C-07', 'dsm', 'DSM · 2º sem', 'Cantina sem Fila', 'Pedido antecipado para a cantina no intervalo das 20h50.'],
+    ['C-08', 'dsm', 'DSM · 2º sem', 'Guia do Calouro', 'O que ninguém explica na primeira semana de aula.'],
+    ['C-09', 'dsm', 'DSM · 2º sem', 'Estude Junto', 'Encontra colegas para grupos de estudo por disciplina.'],
+    ['C-10', 'dsm', 'DSM · 2º sem', 'Bilhete Único', 'Protótipo de recarga do passe estudantil pelo celular.'],
+    ['C-11', 'dsm', 'DSM · 3º sem', 'Fila Zero', 'Agendamento por WhatsApp para a UBS do Jardim Santa Efigênia.'],
+    ['C-12', 'dsm', 'DSM · 3º sem', 'Horta Conectada', 'Sensores de umidade avisam a escola quando regar a horta.'],
+    ['C-13', 'dsm', 'DSM · 1º sem', 'Receitas da Vó', 'Acervo de receitas de família contadas pelos avós.'],
+    ['C-14', 'dsm', 'DSM · 1º sem', 'Quadra Livre', 'Reserva das quadras públicas do bairro.'],
+    ['C-15', 'dsm', 'DSM · 2º sem', 'Sebo Fatec', 'Troca e venda de livros usados entre alunos.'],
+    ['C-16', 'dsm', 'DSM · 2º sem', 'Rega Certa', 'Calendário de rega para pequenos produtores da zona rural.'],
+    ['C-17', 'dsm', 'DSM · 3º sem', 'Rota Acessível', 'Mapa colaborativo das calçadas do centro para cadeirantes.'],
+    ['C-18', 'dsm', 'DSM · 3º sem', 'Vitrine CPS', 'O sistema desta Mostra, feito pelos alunos de DSM.'],
+    ['C-19', 'dsm', 'DSM · 3º sem', 'Clima no Campo', 'Alertas de geada e chuva para sitiantes por SMS.'],
+    ['C-20', 'dsm', 'DSM · 3º sem', 'Recicla Já', 'Agenda da coleta seletiva por rua, com lembrete.'],
+    ['C-21', 'livre'], ['C-22', 'livre'], ['C-23', 'livre'], ['C-24', 'livre'],
+    ['S1-01', 'gtur', 'GTUR · 2º sem', 'Festival das Águas', 'Plano de um festival gastronômico para o aniversário de Olímpia.'],
+    ['S1-02', 'gtur', 'GTUR · 2º sem', 'Roteiro Pedal', 'Passeio ciclístico pelos parques e pela zona rural.'],
+    ['S1-03', 'gtur', 'GTUR · 2º sem', 'Noite do Folclore', 'Evento com grupos de folclore da cidade na praça central.'],
+    ['S2-01', 'gtur', 'GTUR · 3º sem', 'Olímpia em 360°', 'Tour virtual dos pontos turísticos com áudio em três idiomas.'],
+    ['S2-02', 'gtur', 'GTUR · 3º sem', 'Hospeda Bem', 'Treinamento de atendimento para pousadas pequenas.'],
+    ['S2-03', 'gtur', 'GTUR · 3º sem', 'Turismo Rural', 'Roteiro de um dia por sítios e produtores da região.'],
+    ['S3-01', 'gtur', 'GTUR · 3º sem', 'Olímpia Acessível', 'Guia de atrativos com acessibilidade verificada.'],
+    ['S3-02', 'livre'], ['S3-03', 'livre']
+  ];
+  var porCodigo = {};
+  projetos.forEach(function (p) { porCodigo[p[0]] = { curso: p[1], turma: p[2] || '', titulo: p[3] || '', resumo: p[4] || '' }; });
+  estandes.forEach(function (e) { var p = porCodigo[e.cod] || { curso: 'livre' }; e.curso = p.curso; e.turma = p.turma; e.titulo = p.titulo; e.resumo = p.resumo; });
+
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+
+  /* -------- desenho -------- */
+  var NS = 'http://www.w3.org/2000/svg';
+  var svg = document.getElementById('planta');
+  function el(nome, attrs, pai) { var n = document.createElementNS(NS, nome); for (var k in attrs) n.setAttribute(k, attrs[k]); if (pai) pai.appendChild(n); return n; }
+  function texto(pai, x, y, conteudo, classe, ancora) {
+    var t = el('text', { x: x, y: y, 'class': classe || '', 'text-anchor': ancora || 'middle', 'dominant-baseline': 'middle' }, pai);
+    t.textContent = conteudo;
+    return t;
+  }
+  var elementos = {};
+
+  function desenha() {
+    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    var g = el('g', {}, svg);
+
+    for (var gx = 0; gx <= W; gx += 50) el('line', { x1: gx, y1: 0, x2: gx, y2: H, 'class': 'grade' }, g);
+    for (var gy = 0; gy <= H; gy += 50) el('line', { x1: 0, y1: gy, x2: W, y2: gy, 'class': 'grade' }, g);
+
+    el('rect', { x: 30, y: 40, width: 1385, height: 262, 'class': 'predio' }, g);
+    el('rect', { x: 32, y: 126, width: 1381, height: 98, 'class': 'corredor' }, g);
+
+    salasCima.forEach(function (s) {
+      el('rect', { x: s[0], y: 42, width: 122, height: 84, 'class': s[2] ? 'sala sala--estandes' : 'sala' }, g);
+      texto(g, s[0] + 61, s[2] ? 121 : 84, s[1], 'rotulo-sala' + (s[2] ? ' rotulo-sala--pe' : ''));
+    });
+    el('rect', { x: 1017, y: 42, width: 48, height: 36, 'class': 'sala' }, g);
+    texto(g, 1041, 60, 'Dir.', 'rotulo-sala');
+    extrasCima.forEach(function (s) { el('rect', { x: s[0], y: 42, width: s[1], height: 84, 'class': 'sala' }, g); texto(g, s[0] + s[1] / 2, 84, s[2], 'rotulo-sala'); });
+    salasBaixo.forEach(function (s) { el('rect', { x: s[0], y: 224, width: s[1], height: 78, 'class': 'sala' }, g); if (s[2]) texto(g, s[0] + s[1] / 2, 263, s[2], 'rotulo-sala'); });
+
+    // entrada (abertura na parede de baixo)
+    el('rect', { x: 484, y: 296, width: 88, height: 10, fill: 'var(--papel-2)', stroke: 'none' }, g);
+    el('path', { d: 'M528 292 V256 M520 264 L528 256 L536 264', 'class': 'seta-entrada' }, g);
+    texto(g, 528, 240, 'Entrada', 'entrada');
+
+    // você está aqui: TV com o QR da votação
+    var voce = el('g', { 'class': 'voce' }, g);
+    el('rect', { x: 490, y: 136, width: 76, height: 28 }, voce);
+    texto(voce, 528, 150, 'TV · QR', '');
+    el('circle', { cx: 528, cy: 176, r: 6, 'class': 'marca-aqui' }, voce);
+    el('circle', { cx: 528, cy: 176, r: 6, 'class': 'alvo mostra' }, voce);
+
+    estandes.forEach(function (e) {
+      var w = 48, h = 28;
+      var item = el('g', { 'class': 'estande estande--' + e.curso, tabindex: '0', role: 'button', 'data-cod': e.cod,
+        'aria-label': 'Estande ' + e.cod + (e.titulo ? ': ' + e.titulo : ', livre') }, g);
+      el('rect', { x: e.x, y: e.y, width: w, height: h, 'class': 'caixa' }, item);
+      texto(item, e.x + w / 2, e.y + h / 2, e.cod, '');
+      el('rect', { x: e.x, y: e.y, width: w, height: h, 'class': 'alvo' }, item);
+      item.addEventListener('click', function () { seleciona(e.cod, true); });
+      item.addEventListener('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); seleciona(e.cod, true); } });
+      elementos[e.cod] = item;
+    });
+    aplicaFiltro();
+    if (atual) seleciona(atual, false);
+  }
+
+  /* -------- lista estande → projeto -------- */
+  var listas = document.getElementById('listas');
+  var itens = {};
+  var areas = [];
+  estandes.forEach(function (e) { if (areas.indexOf(e.area) < 0) areas.push(e.area); });
+  areas.forEach(function (area) {
+    var doArea = estandes.filter(function (e) { return e.area === area; });
+    var bloco = document.createElement('section'); bloco.className = 'lista-area';
+    var ocupados = doArea.filter(function (e) { return e.curso !== 'livre'; }).length;
+    bloco.innerHTML = '<h3>' + area + '<span>' + ocupados + ' de ' + doArea.length + ' estandes</span></h3>';
+    var lista = document.createElement('div'); lista.className = 'lista';
+    doArea.forEach(function (e) {
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'item item--' + e.curso; b.dataset.cod = e.cod;
+      b.innerHTML = '<span class="item__cod">' + e.cod + '</span><span class="item__txt"><strong></strong><small></small></span>';
+      b.querySelector('strong').textContent = e.titulo || 'Estande livre';
+      b.querySelector('small').textContent = e.turma || '—';
+      b.addEventListener('click', function () { seleciona(e.cod, true); document.querySelector('.planta').scrollIntoView({ behavior: 'smooth', block: 'center' }); });
+      lista.appendChild(b); itens[e.cod] = b;
+    });
+    bloco.appendChild(lista); listas.appendChild(bloco);
+  });
+  var nada = document.createElement('p'); nada.className = 'nada'; nada.hidden = true; nada.textContent = 'Nenhum projeto com esse nome. Tente parte do nome ou o código do estande.';
+  listas.appendChild(nada);
+
+  /* -------- seleção, busca e filtro -------- */
+  var atual = null;
+  function seleciona(cod, atualizaUrl) {
+    var e = estandes.filter(function (x) { return x.cod === cod; })[0];
+    if (!e) return;
+    atual = cod;
+    Object.keys(elementos).forEach(function (k) {
+      var ativo = k === cod;
+      elementos[k].classList.toggle('ativo', ativo);
+      elementos[k].querySelector('.alvo').classList.toggle('mostra', ativo);
+      if (itens[k]) itens[k].classList.toggle('ativo', ativo);
+    });
+    document.getElementById('ficha-codigo').textContent = e.cod;
+    document.getElementById('ficha-onde').textContent = e.area + (e.turma ? ' · ' + e.turma : '');
+    document.getElementById('ficha-titulo').textContent = e.titulo || 'Estande livre';
+    document.getElementById('ficha-resumo').textContent = e.resumo || 'Sem projeto neste estande.';
+    document.getElementById('ficha-link').hidden = !e.titulo;
+    if (atualizaUrl) { try { history.replaceState(null, '', '#' + cod); } catch (x) {} }
+    var caixa = document.getElementById('planta-caixa');
+    if (caixa.scrollWidth > caixa.clientWidth) {
+      var escala = svg.getBoundingClientRect().width / W;
+      caixa.scrollLeft = (e.x + 24) * escala - caixa.clientWidth / 2;
+    }
+  }
+
+  var curso = 'todos';
+  var busca = document.getElementById('busca');
+  function normaliza(s) { return (s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); }
+  function aplicaFiltro() {
+    var q = normaliza(busca.value.trim());
+    var visiveis = 0;
+    estandes.forEach(function (e) {
+      var passaCurso = curso === 'todos' || e.curso === curso;
+      var passaBusca = !q || normaliza(e.titulo).indexOf(q) >= 0 || normaliza(e.cod).indexOf(q) >= 0;
+      var passa = passaCurso && passaBusca && (q ? e.curso !== 'livre' : true);
+      if (elementos[e.cod]) elementos[e.cod].classList.toggle('apagado', !passa);
+      if (itens[e.cod]) itens[e.cod].hidden = !passa;
+      if (passa) visiveis++;
+    });
+    nada.hidden = visiveis > 0;
+    document.querySelectorAll('.lista-area').forEach(function (bloco) {
+      bloco.hidden = !bloco.querySelector('.item:not([hidden])');
+    });
+  }
+  busca.addEventListener('input', function () {
+    aplicaFiltro();
+    var achados = estandes.filter(function (e) { return elementos[e.cod] && !elementos[e.cod].classList.contains('apagado') && e.curso !== 'livre'; });
+    if (busca.value.trim() && achados.length === 1) seleciona(achados[0].cod, true);
+  });
+  document.querySelectorAll('.filtros .chip').forEach(function (chip) {
+    chip.addEventListener('click', function () {
+      curso = chip.dataset.curso;
+      document.querySelectorAll('.filtros .chip').forEach(function (c) { c.setAttribute('aria-pressed', c === chip ? 'true' : 'false'); });
+      aplicaFiltro();
+    });
+  });
+
+  /* -------- menu do celular -------- */
+  var botao = document.querySelector('.nav-toggle'); var nav = document.querySelector('.nav');
+  if (botao && nav) botao.addEventListener('click', function () { var aberto = nav.classList.toggle('aberto'); botao.setAttribute('aria-expanded', aberto ? 'true' : 'false'); });
+
+  desenha();
+  var inicial = (location.hash || '').replace('#', '').toUpperCase();
+  seleciona(porCodigo[inicial] && porCodigo[inicial].titulo ? inicial : 'C-11', false);
+})();
+</script>
+
+</body>
+</html>

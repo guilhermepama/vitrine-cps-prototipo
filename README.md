@@ -5,6 +5,7 @@ Duas páginas de referência visual para o grupo aprovar antes de ir para o Djan
 - `index.html` — página inicial (vitrinecps.com.br)
 - `projeto.html` — página pública de um projeto (/projeto/<slug>/), com projeto de exemplo
 - `votar.html` — avaliação de um projeto pelo visitante credenciado (/votar/<slug>/): notas 1–5 em três critérios. Sem link a partir das páginas públicas (guardrail 8); abrir pela URL.
+- `mapa.html` — mapa dos estandes (/mapa/): planta do térreo, busca, filtro por curso e lista estande → projeto. Proposta para a reunião de 16/10; numeração, salas e alocação são exemplos (a definir pela turma de GTUR). Abra com `#C-07` no fim do endereço para destacar um estande.
 - `fachada.webp` — fachada da Fatec tratada (P&B + placa vermelha, fundo transparente)
 
 Tudo é exemplo: projetos, capas, nomes e textos de impacto. Links para rotas do sistema
